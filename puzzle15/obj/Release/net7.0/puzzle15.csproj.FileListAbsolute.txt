@@ -1,0 +1,15 @@
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/puzzle15
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/puzzle15.deps.json
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/puzzle15.runtimeconfig.json
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/puzzle15.dll
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/puzzle15.pdb
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/puzzle15.csproj.AssemblyReference.cache
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/puzzle15.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/puzzle15.AssemblyInfoInputs.cache
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/puzzle15.AssemblyInfo.cs
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/puzzle15.csproj.CoreCompileInputs.cache
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/puzzle15.dll
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/refint/puzzle15.dll
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/puzzle15.pdb
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/puzzle15.genruntimeconfig.cache
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/obj/Release/net7.0/ref/puzzle15.dll

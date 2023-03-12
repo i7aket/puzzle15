@@ -1,0 +1,5 @@
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/publish/puzzle15
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/publish/puzzle15.dll
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/publish/puzzle15.deps.json
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/publish/puzzle15.runtimeconfig.json
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/publish/puzzle15.pdb

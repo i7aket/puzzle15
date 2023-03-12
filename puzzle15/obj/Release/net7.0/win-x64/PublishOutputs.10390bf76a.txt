@@ -1,0 +1,2 @@
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/win-x64/publish/puzzle15.pdb
+/Users/Anatoliy/Work Dropbox/Anatoliy Yermakov/Programming/C#/Projects/puzzle15/puzzle15/bin/Release/net7.0/win-x64/publish/puzzle15.exe
