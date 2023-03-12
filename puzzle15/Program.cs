@@ -1,5 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-
+// puzzle15 version 0.1
 
 using System.Threading.Channels;
 
