@@ -27,7 +27,7 @@ public class Display
         for (int l = 0; l < 4; l++)
         {
             
-            for (int i = 0; i < NummbersDictionary.Numbers.GetLength(1); i++)
+            for (int i = 0; i < Dictionary.Numbers.GetLength(1); i++)
             {
                 
                     for (int n = 0; n < board.GetLength(1); n++)
@@ -38,7 +38,7 @@ public class Display
                             board[l, n] == winBoard[l, n] ? ConsoleColor.Green : ConsoleColor.Yellow;
 
                         
-                        Console.Write($"{NummbersDictionary.Numbers[board[l, n], i]} ");
+                        Console.Write($"{Dictionary.Numbers[board[l, n], i]} ");
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                     }
 

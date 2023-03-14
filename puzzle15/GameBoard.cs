@@ -13,7 +13,7 @@ public class GameBoard
         {13,14,15,0},
     };
     
-    public readonly int [,] WinBoard  =
+    public static readonly int [,] WinBoard  =
     {
         {1,2,3,4},
         {5,6,7,8},

@@ -1,4 +1,4 @@
-﻿// puzzle15 version 0.3
+﻿// puzzle15 version 0.39
 
 namespace Puzzle15;
 
@@ -10,25 +10,26 @@ internal class Program
 
     { 
         GameBoard board = new GameBoard();
-        
-        
-        /*Display canvas = new Display();
-        canvas.Fillcanvas();*/
-        
-        
+        Output showGameBoard = new Output();
 
-        
         void NewGame()
         {
             board.DefaultPosition();
-            Display.ShowBoard(board.Board, board.WinBoard);
+            showGameBoard.FillCanvas();
+            showGameBoard.FillColorCanvas();
+            ShowGame();
         }
-        
-        Display.ShowBoard(board.Board, board.WinBoard);
+
+        void ShowGame()
+        {
+            Console.Clear();
+            showGameBoard.InitBoard(board.Board);
+            showGameBoard.ShowAll();
+        }
+
         NewGame();
         board.Shuffle();
-        Console.Clear();
-        Display.ShowBoard(board.Board, board.WinBoard);
+        ShowGame();
         
         ConsoleKeyInfo e;
         do
@@ -38,56 +39,58 @@ internal class Program
             switch (e.Key)
             {
                 case ConsoleKey.RightArrow when board.ZeroPosX < 3:
-                    board.MoveTile("Right", 1);    
+                    board.MoveTile("Right", 1);
                     break;
                 
                 case ConsoleKey.DownArrow when board.ZeroPosY < 3:
                     board.MoveTile("Down", 1);
+                   
                     break;
                 
                 case ConsoleKey.LeftArrow when board.ZeroPosX > 0:
                     board.MoveTile("Left", 1);
+                  
                     break;
                 
                 case ConsoleKey.UpArrow when board.ZeroPosY > 0:
                     board.MoveTile("Up", 1);
+                    
                     break;
                 
                 //New Game
                 case ConsoleKey.N:
                     NewGame();
                     board.Shuffle();
-                    Display.ShowBoard(board.Board, board.WinBoard);
+                    ShowGame();
                     break;
                 
                 //debugging win condition
                 case ConsoleKey.W:
                     board.DefaultPosition();
-                    Console.Clear();
-                    Display.ShowBoard(board.Board, board.WinBoard);
+                    ShowGame();
                     break;
                 
                 //for debug cases
-                /*case ConsoleKey.D:
+                case ConsoleKey.D:
                     Console.Clear();
-                    break;*/
-                    
-    
-
+                    showGameBoard.FillCanvas();
+                    showGameBoard.InitBoard(board.Board);
+                    showGameBoard.ShowAll();
+                    Console.ReadLine();
+                    break;
             }
             
-            
-            Display.ShowBoard(board.Board, board.WinBoard);
-            
+            ShowGame();
             
             if (board.СheckWin())
             {
-                Display.ShowWin();
-                Console.WriteLine("Press enter to start new game");
+                showGameBoard.DrawMessage(4,0, "Red", Dictionary.WinText);
+                Console.Clear();
+                showGameBoard.ShowAll();
                 Console.ReadLine();
                 NewGame();
                 board.Shuffle();
-                Display.ShowBoard(board.Board, board.WinBoard);
+                ShowGame();
             }
         }
         while (e.Key != ConsoleKey.Escape);
