@@ -1,4 +1,4 @@
-namespace puzzle15;
+namespace Puzzle15;
 
 public class GameBoard
 {
@@ -13,7 +13,7 @@ public class GameBoard
         {13,14,15,0},
     };
     
-    public int [,] Winboard  =
+    public readonly int [,] WinBoard  =
     {
         {1,2,3,4},
         {5,6,7,8},
@@ -28,14 +28,14 @@ public class GameBoard
         for (int i = 0; i < 20; i++)
         {
             int rnd = random.Next(1, 4);
-            Movetile("Up", rnd);
-            Movetile("Left",rnd);
-            Movetile("Down", rnd);
-            Movetile("Right",rnd);
+            MoveTile("Up", rnd);
+            MoveTile("Left",rnd);
+            MoveTile("Down", rnd);
+            MoveTile("Right",rnd);
         }
     }
 
-    public void Defaultposition()
+    public void DefaultPosition()
     {
         ZeroPosX = 3;
         ZeroPosY = 3;
@@ -43,13 +43,13 @@ public class GameBoard
         {
             for (int j = 0; j < 4; j++)
             {
-                Board[i, j] = Winboard[i, j];
+                Board[i, j] = WinBoard[i, j];
             } 
         }
     }
     
     
-    public void Movetile(string move, int repeat)
+    public void MoveTile(string move, int repeat)
     {
         switch (move)
         {
@@ -100,13 +100,13 @@ public class GameBoard
         }
     }
 
-    public bool Chekwin()
+    public bool СheckWin()
     {
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (Board[i, j] != Winboard[i, j])
+                if (Board[i, j] != WinBoard[i, j])
                 {
                     return false;
                 }
