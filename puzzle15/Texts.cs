@@ -1,8 +1,32 @@
 namespace Puzzle15;
 
-public class Dictionary
+public class Texts
 {
-    public static string[] WinText =
+    public readonly string ScoreLabel = "Name            Time  Moves";
+    
+    public readonly string EmptyNameField = "                "; 
+    
+    public readonly string[] NameMovesTimes =
+    {
+        " Name:                       ",
+        "                             ",
+        " Moves:                      ",
+        "                             ",
+        " Time:                       ",
+        "                             "
+    }; 
+    
+    public readonly string[] HowToPlay =
+    {
+        "   Use cursor control keys   ",
+        " (the arrows) to move blocks ",
+        "                             ",
+        "   Press esc to exit Game    ",
+        "    Press N for New Game     ",
+        "   Press C to change name    ",
+    }; 
+    
+    public readonly string[] Win =
     {
         " ██████╗ ██████╗ ███╗   ██╗ ██████╗ ██████╗  █████╗ ████████╗███████╗",
         "██╔════╝██╔═══██╗████╗  ██║██╔════╝ ██╔══██╗██╔══██╗╚══██╔══╝██╔════╝",
@@ -23,7 +47,7 @@ public class Dictionary
         "                    Press enter to start new game                    "
     };
 
-    public static string[,] Numbers = {
+    public readonly string[,] Numbers = {
             {
                 "               ",
                 "               ",

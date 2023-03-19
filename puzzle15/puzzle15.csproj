@@ -10,6 +10,9 @@
     <ItemGroup>
       <Compile Remove="ShuffleBoard.cs" />
       <Compile Remove="MoveTile.cs" />
+      <Compile Remove="Messages.cs" />
+      <Compile Remove="Display.cs" />
+      <Compile Remove="Scores.cs" />
     </ItemGroup>
 
 </Project>

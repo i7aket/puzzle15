@@ -13,14 +13,13 @@ public class GameBoard
         {13,14,15,0},
     };
     
-    public static readonly int [,] WinBoard  =
+    public readonly int [,] WinBoard  =
     {
         {1,2,3,4},
         {5,6,7,8},
         {9,10,11,12},
         {13,14,15,0},
     };
-
     
     public void Shuffle()
     {
@@ -47,7 +46,6 @@ public class GameBoard
             } 
         }
     }
-    
     
     public void MoveTile(string move, int repeat)
     {

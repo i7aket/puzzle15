@@ -1,10 +1,11 @@
 namespace Puzzle15;
 
-public class Output
+public class Graphics
 {
-    public char[,] Canvas = new char[29, 69];
-    public string[,] CanvasColor = new string[29, 69];
+    public char[,] Canvas = new char[29, 99];
+    public string[,] CanvasColor = new string[29, 99];
 
+    
     public void FillCanvas()
     {
         for (var i = 0; i < Canvas.GetLength(0); i++)
@@ -15,6 +16,7 @@ public class Output
             }
         }
     }    
+    
     public void FillColorCanvas()
     {
         for (var i = 0; i < CanvasColor.GetLength(0); i++)
@@ -26,7 +28,7 @@ public class Output
         }
     }
 
-    public void ShowAll()
+    public void Show()
     {
         for (var i = 0; i < Canvas.GetLength(0); i++)
         {
@@ -59,10 +61,8 @@ public class Output
             Console.WriteLine();
         }
     }
-
-
-
-    public void InitBoard(int[,] boardArray)
+    
+    public void InitBoard(int[,] boardArray, int [,] winBoardArray, string [,] dicNum)
     {
         int shiftY = 1;
         for (int line = 0; line < boardArray.GetLength(0); line++)
@@ -70,23 +70,23 @@ public class Output
             int shiftX = 3;
             for (int column = 0; column < boardArray.GetLength(1); column++)
             {
-                string color = boardArray[line, column] == GameBoard.WinBoard[line, column] ? "Green" : "Yellow";
-                DrawNumber(boardArray[line,column], shiftY, shiftX, color);
+                string color = boardArray[line, column] == winBoardArray[line, column] ? "Green" : "Yellow";
+                DrawNumber(boardArray[line,column], shiftY, shiftX, color, dicNum);
                 shiftX += 16;
             }
             shiftY += 7;
         }
     }
     
-    public void DrawNumber(int element, int shiftY, int shiftX, string color)
+    public void DrawNumber(int element, int shiftY, int shiftX, string color, string [,] dicNum)
     {
         //place where to begin to draw an element
 
-        for (int canvasY = 0; canvasY < Dictionary.Numbers.GetLength(1); canvasY++)
+        for (int canvasY = 0; canvasY < dicNum.GetLength(1); canvasY++)
         {
-            for (int canvasX = 0; canvasX < Dictionary.Numbers[0, 0].Length; canvasX++)
+            for (int canvasX = 0; canvasX < dicNum[0, 0].Length; canvasX++)
             {
-                Canvas[canvasY + shiftY, canvasX + shiftX] = Dictionary.Numbers[element, canvasY][canvasX];
+                Canvas[canvasY + shiftY, canvasX + shiftX] = dicNum[element, canvasY][canvasX];
                 CanvasColor[canvasY + shiftY, canvasX + shiftX] = color;
             }
         }
@@ -111,6 +111,47 @@ public class Output
             for (int canvasX = 0; canvasX < text[canvasY].Length; canvasX++)
             {
                 Canvas[canvasY + shiftY, canvasX + shiftX] = text[canvasY][canvasX];
+                CanvasColor[canvasY + shiftY, canvasX + shiftX] = color;
+            }
+        }
+    }
+
+    public void DrawMessage(int shiftY, int shiftX, int shiftTime, int shiftMoves, string color, List<Player> text)
+    {
+        int lines = text.Count < 12 ? text.Count : 12;
+        for (int i = 0; i < lines; i++)
+        {
+            string color1 = color;
+            color1 = i == 0 ? "Red" : color;
+            for (int canvasX = 0; canvasX < text[i].Name.Length; canvasX++)
+            {
+                Canvas[shiftY, canvasX + shiftX] = text[i].Name[canvasX];
+                CanvasColor[shiftY, canvasX + shiftX] = color1;
+            }
+
+            for (int canvasX = 0; canvasX < text[i].Ts.ToString(@"mm\:ss").Length; canvasX++)
+            {
+                Canvas[shiftY, canvasX + shiftX + shiftTime] = text[i].Ts.ToString(@"mm\:ss")[canvasX];
+                CanvasColor[shiftY, canvasX + shiftX + shiftTime] = color1;
+            }
+
+            for (int canvasX = 0; canvasX < text[i].Moves.ToString().Length; canvasX++)
+            {
+                Canvas[shiftY, canvasX + shiftX + shiftMoves] = text[i].Moves.ToString()[canvasX];
+                CanvasColor[shiftY, canvasX + shiftX + shiftMoves] = color1;
+            }
+            shiftY++;
+        }
+
+    }
+
+    public void DrawBoxUsingSymbol(int shiftY, int shiftX, string color, int sizeY, int sizeX, char symbol)
+    {
+        for (int canvasY = 0; canvasY < sizeY; canvasY++)
+        {
+            for (int canvasX = 0; canvasX < sizeX; canvasX++)
+            {
+                Canvas[canvasY + shiftY, canvasX + shiftX] = symbol;
                 CanvasColor[canvasY + shiftY, canvasX + shiftX] = color;
             }
         }
