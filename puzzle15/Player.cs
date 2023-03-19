@@ -2,7 +2,7 @@ namespace Puzzle15;
 
 public class Player
 {
-    public int Moves { get; private set;} = 0;
+    public int Moves = 0;
     public DateTime StartTime { get; private set;} = DateTime.Now;
     public DateTime FinishTime{ get; private set; }
     public TimeSpan Ts { get; private set; }
@@ -13,7 +13,13 @@ public class Player
     
     public Player(string name)
     {
+        
         Name = name;
+    }
+
+    public void SetMoves (int moves)
+    {
+        Moves = moves;
     }
     
     public Player(string name, DateTime startTime, DateTime finishTime, TimeSpan ts, int moves)
@@ -25,19 +31,13 @@ public class Player
         Moves = moves;
     }
 
-    public void AddMoves()
-    {
-        Moves++;
-    }
-    
     public string Name { get; private set; } = "i7aKeT";
     
     public void ChangeName(string name)
     {
         Name = name.Length < 16 ? name : "Too Long Name";
     }
-    
-    
+
     public string TimeSpent()
     {
         FinishTime = DateTime.Now;

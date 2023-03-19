@@ -1,4 +1,4 @@
-﻿// puzzle15 version 0.5
+﻿// puzzle15 version 0.51
 
 namespace Puzzle15;
 

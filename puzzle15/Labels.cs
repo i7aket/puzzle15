@@ -1,11 +1,11 @@
 namespace Puzzle15;
 
-public class Texts
+public class Labels
 {
-    /*public readonly string ScoreLabel = "Name            Time  Moves";
+    public readonly string ScoreTable = "Name            Time  Moves";
     
-    public readonly string EmptyNameField = "                "; 
-    
+    public readonly string EmptyNameField = "                ";
+
     public readonly string[] NameMovesTimes =
     {
         " Name:                       ",
@@ -176,5 +176,5 @@ public class Texts
                 "  ██║███████║  ",
                 "  ╚═╝╚══════╝  " 
             }
-    };*/
+    };
 }

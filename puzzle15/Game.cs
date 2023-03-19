@@ -2,34 +2,26 @@ namespace Puzzle15;
 
 public class Game
 {
-    Texts texts = new Texts();
-    GameBoard board = new GameBoard();
-    Graphics buffer = new Graphics();
-    ScoreBoard players = new ScoreBoard();
-    Player player = new Player();
-    string name = "i7aKeT";
+    GameBoard _gameBoard = new GameBoard();
+    Display _display = new Display();
+    ScoreBoard _players = new ScoreBoard();
+    Player _player = new Player();
+    string _name = "i7aKeT";
     
     void NewGame()
     {
-        player = new Player(name);
-        board.DefaultPosition();
-        board.Shuffle();
-        buffer.FillCanvas();
-        buffer.FillColorCanvas();
-        buffer.InitBoard(board.Board, board.WinBoard, texts.Numbers);
-        buffer.DrawMessage(8,68, "Green", texts.HowToPlay);
-        buffer.DrawMessage(1,68, "Green", texts.NameMovesTimes);
-        buffer.DrawMessage(3,77, "Green", player.Moves.ToString());
-        buffer.DrawMessage(1,77, "Green", player.Name);
-        buffer.DrawMessage(5,77, "Green", player.TimeSpent());
-        buffer.DrawBoxUsingSymbol(15, 68, "Green", 13, 29, ' ');
-        buffer.DrawMessage(15,69, "Green", texts.ScoreLabel);
-        buffer.DrawMessage(16,69, 16, 22, "Green", players.List);
+        _player = new Player(_name);
+        _gameBoard = new GameBoard();
+        _gameBoard.Shuffle();
+        _display.FillCanvas();
+        _display.FillColorCanvas();
+        _display.InitBoard(_gameBoard);
+        _display.InitInterface(_name, _players.List);
         Console.Clear();
-        buffer.Show();
+        _display.Draw();
     }
     
-    public void Play()
+    private void Play()
     {
         ConsoleKeyInfo e;
         do
@@ -37,24 +29,20 @@ public class Game
             e = Console.ReadKey();
             switch (e.Key)
             {
-                case ConsoleKey.RightArrow when board.ZeroPosX < 3:
-                    board.MoveTile("Right", 1);
-                    player.AddMoves();
+                case ConsoleKey.RightArrow when _gameBoard.ZeroPosX < 3:
+                    _gameBoard.MoveTile("Right", 1);
                     break;
 
-                case ConsoleKey.DownArrow when board.ZeroPosY < 3:
-                    board.MoveTile("Down", 1);
-                    player.AddMoves();
+                case ConsoleKey.DownArrow when _gameBoard.ZeroPosY < 3:
+                    _gameBoard.MoveTile("Down", 1);
                     break;
 
-                case ConsoleKey.LeftArrow when board.ZeroPosX > 0:
-                    board.MoveTile("Left", 1);
-                    player.AddMoves();
+                case ConsoleKey.LeftArrow when _gameBoard.ZeroPosX > 0:
+                    _gameBoard.MoveTile("Left", 1);
                     break;
 
-                case ConsoleKey.UpArrow when board.ZeroPosY > 0:
-                    board.MoveTile("Up", 1);
-                    player.AddMoves();
+                case ConsoleKey.UpArrow when _gameBoard.ZeroPosY > 0:
+                    _gameBoard.MoveTile("Up", 1);
                     break;
 
                 //New Game
@@ -63,44 +51,45 @@ public class Game
                     break;
 
                 case ConsoleKey.C:
+                    Console.Clear();
+                    _display.Draw();
                     Console.WriteLine("Type your Name");
-                    name = Console.ReadLine();
-                    player.ChangeName(name);
-                    buffer.DrawMessage(1, 77, "Green", texts.EmptyNameField);
-                    buffer.DrawMessage(1, 77, "Green", player.Name);
+                    _name = Console.ReadLine();
+                    _player.ChangeName(_name);
+                    _display.ChangeName(_player.Name);
                     break;
 
                 //debugging win condition
                 case ConsoleKey.W:
-                    board.DefaultPosition();
+                    _gameBoard.DefaultPosition();
                     break;
 
                 //for debug cases
                 case ConsoleKey.D:
+                    ScoreBoard.NewSFile(false);
                     //Console.ReadLine();
                     break;
             }
-
-            buffer.DrawMessage(3, 77, "Green", player.Moves.ToString());
-            buffer.DrawMessage(5, 77, "Green", player.TimeSpent());
-            buffer.InitBoard(board.Board, board.WinBoard, texts.Numbers);
+            _display.ChangeMovesAndTime(_gameBoard.Moves.ToString(), _player.TimeSpent());
+            _display.InitBoard(_gameBoard);
             Console.Clear();
-            buffer.Show();
+            _display.Draw();
             CheckWin();
         } while (e.Key != ConsoleKey.Escape);
     }
     
-    public void CheckWin()
+    private void CheckWin()
     {
-        if (board.СheckWin())
+        if (_gameBoard.СheckWin())
         {
-            buffer.DrawMessage(4, 15, "Red", texts.Win);
-            player.TimeSpent();
-            players.List.Add(player);
-            players.Sort();
-            players.SaveList();
+            _display.ShowYouWIn();
+            _player.TimeSpent();
+            _player.SetMoves(_gameBoard.Moves);
+            _players.List.Add(_player);
+            _players.Sort();
+            _players.SaveList();
             Console.Clear();
-            buffer.Show();
+            _display.Draw();
             Console.ReadLine();
             NewGame();
         }
@@ -109,7 +98,7 @@ public class Game
     public void Begin ()
     {
         ScoreBoard.NewSFile();
-        players.LoadList();
+        _players.LoadList();
         NewGame();
         Play();
     }

@@ -4,17 +4,21 @@ public class ScoreBoard
 {
     public List<Player> List = new List<Player>();
 
-    public static void NewSFile()
+    public static void NewSFile(Boolean append = true)
     {
-        using StreamWriter save = new StreamWriter("s.txt", true);
+        using StreamWriter save = new StreamWriter("s.txt", append);
         save.Write("");
     }
+    
+    
     public void SaveList()
     {
         using StreamWriter save = new StreamWriter("s.txt");
-        for (int i=0; i<List.Count; i++)
-            save.WriteLine($"{List[i].Name}§{List[i].StartTime}§{List[i].FinishTime}§{List[i].Ts}§{List[i].Moves}");
+        foreach (var el in List)
+            save.WriteLine($"{el.Name}§{el.StartTime}§{el.FinishTime}§{el.Ts}§{el.Moves}");
     }
+    
+    
     
     public void LoadList()
     {
@@ -40,8 +44,8 @@ public class ScoreBoard
 
                 for (int i = indexLower + 1; i < List.Count; i++)
                 {
-                    int rezult = TimeSpan.Compare(List[indexLower].Ts, List[i].Ts);
-                    if (rezult > 0)
+                    int result = TimeSpan.Compare(List[indexLower].Ts, List[i].Ts);
+                    if (result > 0)
                     {
                         (List[i], List[indexLower]) = (List[indexLower], List[i]);
                     }

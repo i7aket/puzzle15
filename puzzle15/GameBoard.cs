@@ -2,10 +2,11 @@ namespace Puzzle15;
 
 public class GameBoard
 {
-    public int ZeroPosX = 3;
-    public int ZeroPosY = 3;
+    public int ZeroPosX { get; private set;}= 3;
+    public int ZeroPosY { get; private set;}= 3;
+    public int Moves { get; private set;}= 0;
     
-    public int [,] Board  =
+    public int [,] Board  { get; private set;}=
     {
         {1,2,3,4},
         {5,6,7,8},
@@ -21,6 +22,7 @@ public class GameBoard
         {13,14,15,0},
     };
     
+    
     public void Shuffle()
     {
         Random random = new Random();
@@ -32,6 +34,7 @@ public class GameBoard
             MoveTile("Down", rnd);
             MoveTile("Right",rnd);
         }
+        Moves = 0;
     }
 
     public void DefaultPosition()
@@ -96,6 +99,7 @@ public class GameBoard
                 break;
             }
         }
+        Moves++;
     }
 
     public bool СheckWin()
