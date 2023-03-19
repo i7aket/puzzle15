@@ -4,12 +4,10 @@ public class ScoreBoard
 {
     public List<Player> List = new List<Player>();
 
-    public void newSFile()
+    public static void NewSFile()
     {
-        {
-            using StreamWriter save = new StreamWriter("s.txt", true);
-            save.Write("");
-        }
+        using StreamWriter save = new StreamWriter("s.txt", true);
+        save.Write("");
     }
     public void SaveList()
     {
@@ -25,13 +23,11 @@ public class ScoreBoard
         while ((s = save.ReadLine()) != null)
         {
             string[] line = s.Split('§');
-            Console.WriteLine(line[0]);
-            Player loadPlayer = new Player();
-            loadPlayer.Name = line[0];
-            loadPlayer.StartTime = DateTime.Parse(line[1]);
-            loadPlayer.FinishTime = DateTime.Parse(line[2]);
-            loadPlayer.Ts = TimeSpan.Parse(line[3]);
-            loadPlayer.Moves = int.Parse(line[4]);
+            Player loadPlayer = new Player(line[0], 
+                DateTime.Parse(line[1]), 
+                DateTime.Parse(line[2]), 
+                TimeSpan.Parse(line[3]), 
+                int.Parse(line[4]));
             List.Add(loadPlayer);
         }
     }
@@ -52,11 +48,5 @@ public class ScoreBoard
                 }
             }
         }
-
-
     }
 }
-
-//var tmp = List[i];
-                
-//List[0].Ts
