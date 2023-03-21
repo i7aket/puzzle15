@@ -1,24 +1,67 @@
 namespace Puzzle15;
 
 public class Game
-{
+{   
     GameBoard _gameBoard = new GameBoard();
-    Display _display = new Display();
-    ScoreBoard _players = new ScoreBoard();
+    ScoreBoard _scoreBoard = new ScoreBoard();
     Player _player = new Player();
     string _name = "i7aKeT";
+    private Graphics _graphics = new Graphics();
     
+    private void PrintTime(object state)
+    {
+        _graphics.ChangeMovesAndTime(_gameBoard.Moves.ToString(), _player.TimeSpent());
+    }
+    
+    public void Begin ()
+    {
+        _graphics.ChangeName(_name);
+        _scoreBoard.NewSFile();    
+        _scoreBoard.LoadList();
+        _graphics.InitScoreBoard(_scoreBoard.List);
+        _gameBoard.Shuffle();
+        _graphics.InitBoard(_gameBoard);
+        Play();
+    }
     void NewGame()
     {
         _player = new Player(_name);
         _gameBoard = new GameBoard();
+        _graphics = new Graphics();
+        _graphics.ChangeName(_name);
         _gameBoard.Shuffle();
-        _display.FillCanvas();
-        _display.FillColorCanvas();
-        _display.InitBoard(_gameBoard);
-        _display.InitInterface(_name, _players.List);
-        Console.Clear();
-        _display.Draw();
+        _graphics.InitScoreBoard(_scoreBoard.List);
+        _graphics.InitBoard(_gameBoard);
+    }
+    
+    private void ChangeName()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(73,1);
+        Console.WriteLine("Type your Name");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.SetCursorPosition(73,1);
+        _name = Console.ReadLine();
+        _player.ChangeName(_name);
+        _graphics = new Graphics();
+        _graphics.ChangeName(_player.Name);
+        _graphics.InitScoreBoard(_scoreBoard.List);
+    }
+    private bool CheckWin()
+    {
+        if (_gameBoard.СheckWin())
+        {
+            _graphics.ShowYouWon();
+            _player.TimeSpent();
+            _player.SetMoves(_gameBoard.Moves);
+            _scoreBoard.List.Add(_player);
+            _scoreBoard.Sort();
+            _scoreBoard.SaveList();
+            Console.ReadKey(); 
+            NewGame();
+            return true;
+        }
+        else return false;
     }
     
     private void Play()
@@ -26,6 +69,9 @@ public class Game
         ConsoleKeyInfo e;
         do
         {
+            TimerCallback timerCallback = new TimerCallback(PrintTime);
+            Timer time = new Timer(timerCallback, null, 0, 1000);
+            
             e = Console.ReadKey();
             switch (e.Key)
             {
@@ -51,55 +97,24 @@ public class Game
                     break;
 
                 case ConsoleKey.C:
-                    Console.Clear();
-                    _display.Draw();
-                    Console.WriteLine("Type your Name");
-                    _name = Console.ReadLine();
-                    _player.ChangeName(_name);
-                    _display.ChangeName(_player.Name);
+                    time.Dispose();
+                    ChangeName();
                     break;
 
                 //debugging win condition
                 case ConsoleKey.W:
+                    time.Dispose();
                     _gameBoard.DefaultPosition();
                     break;
 
                 //for debug cases
                 case ConsoleKey.D:
-                    ScoreBoard.NewSFile(false);
-                    //Console.ReadLine();
                     break;
             }
-            _display.ChangeMovesAndTime(_gameBoard.Moves.ToString(), _player.TimeSpent());
-            _display.InitBoard(_gameBoard);
-            Console.Clear();
-            _display.Draw();
+            _graphics.ChangeMovesAndTime(_gameBoard.Moves.ToString(), _player.TimeSpent());
+            _graphics.InitBoard(_gameBoard);
+            time.Dispose();
             CheckWin();
         } while (e.Key != ConsoleKey.Escape);
-    }
-    
-    private void CheckWin()
-    {
-        if (_gameBoard.СheckWin())
-        {
-            _display.ShowYouWIn();
-            _player.TimeSpent();
-            _player.SetMoves(_gameBoard.Moves);
-            _players.List.Add(_player);
-            _players.Sort();
-            _players.SaveList();
-            Console.Clear();
-            _display.Draw();
-            Console.ReadLine();
-            NewGame();
-        }
-    }
-    
-    public void Begin ()
-    {
-        ScoreBoard.NewSFile();
-        _players.LoadList();
-        NewGame();
-        Play();
     }
 }

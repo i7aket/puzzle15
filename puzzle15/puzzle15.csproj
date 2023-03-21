@@ -13,6 +13,7 @@
       <Compile Remove="Messages.cs" />
       <Compile Remove="Scores.cs" />
       <Compile Remove="Texts.cs" />
+      <Compile Remove="Display.cs" />
     </ItemGroup>
 
 </Project>

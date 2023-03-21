@@ -4,7 +4,7 @@ public class ScoreBoard
 {
     public List<Player> List = new List<Player>();
 
-    public static void NewSFile(Boolean append = true)
+    public void NewSFile(Boolean append = true)
     {
         using StreamWriter save = new StreamWriter("s.txt", append);
         save.Write("");
