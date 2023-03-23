@@ -2,14 +2,20 @@ namespace Puzzle15;
 
 public class ScoreBoard
 {
-    public List<Player> List = new List<Player>();
+    public ScoreBoard ()
+    {
+        NewSaveFile();
+        LoadList();
+        
+    }
+    
+    List<Player> List = new List<Player>();
 
-    public void NewSFile(Boolean append = true)
+    void NewSaveFile(Boolean append = true)
     {
         using StreamWriter save = new StreamWriter("s.txt", append);
         save.Write("");
     }
-    
     
     public void SaveList()
     {
@@ -17,8 +23,6 @@ public class ScoreBoard
         foreach (var el in List)
             save.WriteLine($"{el.Name}§{el.StartTime}§{el.FinishTime}§{el.Ts}§{el.Moves}");
     }
-    
-    
     
     public void LoadList()
     {
@@ -36,6 +40,32 @@ public class ScoreBoard
         }
     }
 
+    public int CountPlayers()
+    {
+        return List.Count;
+    }
+
+    public string playerName(int n)
+    {
+        return List[n].Name;
+    }
+    
+    public string playerTime(int n)
+    {
+        return List[n].Ts.ToString(@"mm\:ss");
+    }
+    
+    public string playerMoves(int n)
+    {
+        return List[n].Moves.ToString();
+    }
+    
+    public void AddPlayer(Player player)
+    {
+        List.Add(player);
+    }
+    
+    
     public void Sort()
     {
         if (List.Count > 0)

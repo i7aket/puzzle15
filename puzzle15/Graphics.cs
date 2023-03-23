@@ -1,31 +1,56 @@
+using System.ComponentModel;
+
 namespace Puzzle15;
 
 public class Graphics
 {
-    private readonly Output _output = new Output();
-
-    public Graphics()
+    public int ShiftX;
+    public int ShiftY;
+    public ConsoleColor color;
+    public string label;
+    
+    
+    public Graphics (Player player, GameBoard gameBoard, ScoreBoard scoreBoard)
     {
         Console.Clear();
-        _output.Layer0();
+        Output.Layer0();
         
-        _output.Layer1CharBox(1, 65, 6, 29, ' ');
-        _output.Layer1CharBox(8, 65, 6, 29, ' ');
-        _output.Layer1CharBox(15, 65, 13, 29, ' ');
+        Output.Layer1CharBox(1, 65, 6, 29, ' ');
+        Output.Layer1CharBox(8, 65, 6, 29, ' ');
+        Output.Layer1CharBox(15, 65, 13, 29, ' ');
 
-        _output.Layer2(1,65, ConsoleColor.Green, _nameMovesTimes);
-        _output.Layer2(3,73, ConsoleColor.Green, "0"); //Moves
-        _output.Layer2(5,73, ConsoleColor.Green, "00:00"); //Time
+        Output.Layer2(1,65, ConsoleColor.Green, _nameMovesTimes);
+        Output.Layer2(1,73, ConsoleColor.Green, player.Name);
+        Output.Layer2(3,73, ConsoleColor.Green, "0"); //Moves
+        Output.Layer2(5,73, ConsoleColor.Green, "00:00"); //Time
 
         
-        _output.Layer2(8,65, ConsoleColor.Green, _howToPlay);
-        _output.Layer2(11,74, ConsoleColor.Red, "esc");
-        _output.Layer2(12,75, ConsoleColor.Red, "N");
-        _output.Layer2(13,74, ConsoleColor.Red, "C");
+        Output.Layer2(8,65, ConsoleColor.Green, _howToPlay);
+        Output.Layer2(11,74, ConsoleColor.Red, "esc");
+        Output.Layer2(12,75, ConsoleColor.Red, "N");
+        Output.Layer2(13,74, ConsoleColor.Red, "C");
         
+        Output.Layer2(15,66, ConsoleColor.Green, _scoreTable);
         
-        _output.Layer2(15,66, ConsoleColor.Green, _scoreTable);
+        InitBoard(gameBoard);
+        InitScoreBoard(scoreBoard);
+        
     }
+    
+    public Graphics(int ShiftX, int ShiftY, ConsoleColor color, string label)
+    {
+        this.ShiftX = ShiftX;
+        this.ShiftY = ShiftY;
+        this.color = color;
+        this.label = label;
+    }
+
+    /*public void OutPut()
+    {
+        _output.Layer3();
+    }*/
+    
+    private static string _sometext = "SOME TEXT";
 
     public void InitBoard(GameBoard board)
     {
@@ -36,9 +61,9 @@ public class Graphics
             int shiftX = 1;
             for (int column = 0; column < 4; column++)
             {
-                ConsoleColor color = board.Board[row,column] == board.WinBoard[row,column] ? ConsoleColor.Green : ConsoleColor.Yellow;
+                ConsoleColor color = board.CheckPosition(row,column) ? ConsoleColor.Green : ConsoleColor.Yellow;
                 
-                _output.Layer2(shiftY,shiftX, color, _numbers, board.Board[row,column]);
+                Output.Layer3(new (shiftX,shiftY, color, board.Board[row,column]));
                 
                 shiftX += 16;
             }
@@ -48,22 +73,22 @@ public class Graphics
         Console.SetCursorPosition(0, 30);
     }
     
-    public void InitScoreBoard(List<Player> list)
+    public void InitScoreBoard(ScoreBoard scoreBoard)
     {
         int shiftY = 16;
         int shiftX = 66;
         int shiftTimeX = 16;
         int shiftMovesX = 22;
             
-        int lines = list.Count < 12 ? list.Count : 12;
-        for (int i = 0; i < lines; i++)
+        int lines = scoreBoard.CountPlayers() < 12 ? scoreBoard.CountPlayers() : 12;
+        for (int n = 0; n < lines; n++)
         {
 
             ConsoleColor color;
-            if (i == 0)
+            if (n == 0)
             {
                 color = ConsoleColor.Red;
-            } else if (i < 3)
+            } else if (n < 3)
             {
                 color = ConsoleColor.Yellow;
             }
@@ -72,33 +97,43 @@ public class Graphics
                 color = ConsoleColor.Green;
             }
             
-            _output.Layer2(shiftY+i, shiftX, color, list[i].Name);
-            _output.Layer2(shiftY+i, shiftX + shiftTimeX, color, list[i].Ts.ToString(@"mm\:ss"));
-            _output.Layer2(shiftY+i, shiftX + shiftMovesX, color, list[i].Moves.ToString());
+            Output.Layer2(shiftY+n, shiftX, color, scoreBoard.playerName(n));
+            Output.Layer2(shiftY+n, shiftX + shiftTimeX, color, scoreBoard.playerTime(n));
+            Output.Layer2(shiftY+n, shiftX + shiftMovesX, color, scoreBoard.playerMoves(n));
         }
-
     }
     
-    public void ChangeMovesAndTime(string moves, string timeSpent )
+    public void ChangeTime(Player player )
     {
-        _output.Layer2(3, 73, ConsoleColor.Green, moves);
-        _output.Layer2(5, 73, ConsoleColor.Green, timeSpent);
-        Console.SetCursorPosition(0, 30);
+        Output.Layer2(5, 73, ConsoleColor.Green, player.TimeSpent());
     }
     
-    public void ChangeName(string playerName)
+    public void ChangeMoves(GameBoard gameBoard)
     {
-        _output.Layer1CharBox(1, 73, 1, 15, ' ');
-        _output.Layer2(1, 73, ConsoleColor.Green, playerName);
+        Output.Layer2(3, 73, ConsoleColor.Green, gameBoard.GetMoves());
+    }
+    
+    public void ChangeName()
+    {
+        showEmptyName();
+        Console.SetCursorPosition(73,1);
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("Type your Name");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.SetCursorPosition(73,1);
+    }
+    
+    public void showEmptyName ()
+    {
+        Output.Layer1CharBox(1, 73, 1, 21, ' ');
     }
     
     public void ShowYouWon()
     {
-        _output.Layer2(4, 15, ConsoleColor.Red, _win0);
-        _output.Layer2(20, 30, ConsoleColor.Red, _win1);
+        Output.Layer2(4, 15, ConsoleColor.Red, _win0);
+        Output.Layer2(20, 30, ConsoleColor.Red, _win1);
     }
-
-
+    
     private readonly string _scoreTable = "Name            Time  Moves";
     
     public readonly string EmptyNameField = "                ";
@@ -142,136 +177,5 @@ public class Graphics
     };
 
     private readonly string _win1 = "Press any key to start new game";
-
-
-    private readonly string[,] _numbers = {
-            {
-                "               ",
-                "               ",
-                "               ",
-                "               ",
-                "               ",
-                "               "
-            },
-            {
-                "      ██╗      ",
-                "     ███║      ",
-                "     ╚██║      ",
-                "      ██║      ",
-                "      ██║      ",
-                "      ╚═╝      "
-            },
-            {
-                "   ██████╗     ",
-                "   ╚════██╗    ",
-                "    █████╔╝    ",
-                "   ██╔═══╝     ",
-                "   ███████╗    ",
-                "   ╚══════╝    "
-            },
-            {
-                "   ██████╗     ",
-                "   ╚════██╗    ",
-                "    █████╔╝    ",
-                "    ╚═══██╗    ",
-                "   ██████╔╝    ",
-                "   ╚═════╝     "
-            },
-            {
-                "   ██╗  ██╗    ",
-                "   ██║  ██║    ",
-                "   ███████║    ",
-                "   ╚════██║    ",
-                "        ██║    ",
-                "        ╚═╝    "
-            },
-            {
-                "   ███████╗    ",
-                "   ██╔════╝    ",
-                "   ███████╗    ",
-                "   ╚════██║    ",
-                "   ███████║    ",
-                "   ╚══════╝    ",     
-            },
-            {
-                "    ██████╗    ",
-                "   ██╔════╝    ",
-                "   ███████╗    ",
-                "   ██╔═══██╗   ",
-                "   ╚██████╔╝   ",
-                "    ╚═════╝    "
-            },
-            {
-                "   ███████╗    ",
-                "   ╚════██║    ",
-                "       ██╔╝    ",
-                "      ██╔╝     ",  
-                "      ██║      ",
-                "      ╚═╝      "       
-            },
-            {
-                "    █████╗     ",
-                "   ██╔══██╗    ",
-                "   ╚█████╔╝    ",
-                "   ██╔══██╗    ",
-                "   ╚█████╔╝    ",
-                "    ╚════╝     ",      
-            },
-            {
-                "    █████╗     ",
-                "   ██╔══██╗    ",
-                "   ╚██████║    ",
-                "    ╚═══██║    ",
-                "    █████╔╝    ",
-                "    ╚════╝     "
-            },
-            {
-                "  ██╗ ██████╗  ",
-                " ███║██╔═████╗ ",
-                " ╚██║██║██╔██║ ",
-                "  ██║████╔╝██║ ",
-                "  ██║╚██████╔╝ ",
-                "  ╚═╝ ╚═════╝  ",
-            },
-            {
-                "     ██╗ ██╗   ",
-                "    ███║███║   ",
-                "    ╚██║╚██║   ",
-                "     ██║ ██║   ",
-                "     ██║ ██║   ",
-                "     ╚═╝ ╚═╝   "    
-            },
-            {
-                "  ██╗██████╗   ",
-                " ███║╚════██╗  ",
-                " ╚██║ █████╔╝  ",
-                "  ██║██╔═══╝   ",
-                "  ██║███████╗  ",
-                "  ╚═╝╚══════╝  "   
-            },
-            {
-                "  ██╗██████╗   ",
-                " ███║╚════██╗  ",
-                " ╚██║ █████╔╝  ",
-                "  ██║ ╚═══██╗  ",
-                "  ██║██████╔╝  ",
-                "  ╚═╝╚═════╝   "  
-            },
-            {
-                "  ██╗██╗  ██╗  ",
-                " ███║██║  ██║  ",
-                " ╚██║███████║  ",
-                "  ██║╚════██║  ",
-                "  ██║     ██║  ",
-                "  ╚═╝     ╚═╝  "
-            },
-            {
-                "  ██╗███████╗  ",
-                " ███║██╔════╝  ",
-                " ╚██║███████╗  ",
-                "  ██║╚════██║  ",
-                "  ██║███████║  ",
-                "  ╚═╝╚══════╝  " 
-            }
-    };
+    
 }

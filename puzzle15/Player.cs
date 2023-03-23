@@ -2,26 +2,21 @@ namespace Puzzle15;
 
 public class Player
 {
-    public int Moves = 0;
-    public DateTime StartTime { get; private set;} = DateTime.Now;
-    public DateTime FinishTime{ get; private set; }
-    public TimeSpan Ts { get; private set; }
+    public int Moves { get; private set;}
+    public DateTime StartTime { get; private set;}
+    public DateTime FinishTime { get; private set;}
+    public TimeSpan Ts { get; private set;}
+    public string Name{ get; private set;} 
 
     public Player()
     {
-    }
-    
-    public Player(string name)
-    {
-        
-        Name = name;
+        Moves = 0;
+        StartTime = DateTime.Now;
+        Ts = DateTime.Now - StartTime;
+        NewNameFile();
+        LoadName();
     }
 
-    public void SetMoves (int moves)
-    {
-        Moves = moves;
-    }
-    
     public Player(string name, DateTime startTime, DateTime finishTime, TimeSpan ts, int moves)
     {
         Name = name;
@@ -31,17 +26,42 @@ public class Player
         Moves = moves;
     }
 
-    public string Name { get; private set; } = "i7aKeT";
-    
-    public void ChangeName(string name)
+    void NewNameFile(Boolean append = true)
     {
+        using StreamWriter save = new StreamWriter("n.txt", append);
+        save.Write("");
+    }
+
+    public void SaveName()
+    {
+        using StreamWriter save = new StreamWriter("n.txt");
+        save.Write(Name);
+    }
+
+    public void LoadName()
+    {
+        using var load = new StreamReader("n.txt");
+        Name = load.ReadLine();
+        if (Name == null) Name = "please change name";
+    }
+
+    public void SetMoves(GameBoard board)
+        {
+            Moves = board.Moves;
+        }
+
+    public void ChangeName()
+    {
+        string name = Console.ReadLine();
         Name = name.Length < 16 ? name : "Too Long Name";
+        SaveName();
     }
 
     public string TimeSpent()
-    {
-        FinishTime = DateTime.Now;
-        Ts = FinishTime - StartTime;
-        return Ts.ToString(@"mm\:ss");
-    }
+        {
+            FinishTime = DateTime.Now;
+            Ts = FinishTime - StartTime;
+            return Ts.ToString(@"mm\:ss");
+        }
+    
 }

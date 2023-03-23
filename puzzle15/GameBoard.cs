@@ -1,11 +1,14 @@
+using System.Security.AccessControl;
+
 namespace Puzzle15;
 
 public class GameBoard
 {
+    
     public int ZeroPosX { get; private set;}= 3;
     public int ZeroPosY { get; private set;}= 3;
     public int Moves { get; private set;}= 0;
-    
+
     public int [,] Board  { get; private set;}=
     {
         {1,2,3,4},
@@ -22,6 +25,10 @@ public class GameBoard
         {13,14,15,0},
     };
     
+    public GameBoard ()
+    {
+        Shuffle();
+    }
     
     public void Shuffle()
     {
@@ -29,15 +36,15 @@ public class GameBoard
         for (int i = 0; i < 20; i++)
         {
             int rnd = random.Next(1, 4);
-            MoveTile("Up", rnd);
-            MoveTile("Left",rnd);
-            MoveTile("Down", rnd);
-            MoveTile("Right",rnd);
+            Move("Up", rnd);
+            Move("Left",rnd);
+            Move("Down", rnd);
+            Move("Right",rnd);
         }
         Moves = 0;
     }
 
-    public void DefaultPosition()
+    public void DefaultPosition() 
     {
         ZeroPosX = 3;
         ZeroPosY = 3;
@@ -50,59 +57,75 @@ public class GameBoard
         }
     }
     
-    public void MoveTile(string move, int repeat)
+    public void Move(string move, int repeat=1)
     {
         switch (move)
         {
-            case "Right":
+            case "Right" when ZeroPosX < 3:
                 for (int i = 0; i < repeat; i++)
                 {
                     Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY, ZeroPosX + 1];
                     Board[ZeroPosY, ZeroPosX + 1] = 0;
                     ZeroPosX++;
+                    Moves++;
                 }
-
                 break;
 
-            case "Down":
+            case "Down" when ZeroPosY < 3:
             {
                 for (int i = 0; i < repeat; i++)
                 {
                     Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY + 1, ZeroPosX];
                     Board[ZeroPosY + 1, ZeroPosX] = 0;
                     ZeroPosY++;
+                    Moves++;
                 }
-
                 break;
             }
 
-            case "Left":
+            case "Left" when ZeroPosX > 0:
             {
                 for (int i = 0; i < repeat; i++)
                 {
                     Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY, ZeroPosX - 1];
                     Board[ZeroPosY, ZeroPosX - 1] = 0;
                     ZeroPosX--;
+                    Moves++;
                 }
-
                 break;
             }
 
-            case "Up":
+            case "Up" when ZeroPosY > 0:
             {
                 for (int i = 0; i < repeat; i++)
                 {
                     Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY - 1, ZeroPosX];
                     Board[ZeroPosY - 1, ZeroPosX] = 0;
                     ZeroPosY--;
+                    Moves++;
                 }
                 break;
             }
         }
-        Moves++;
     }
 
-    public bool СheckWin()
+    public string GetMoves()
+    {
+        return Moves.ToString();
+    }
+    
+    public bool CheckPosition(int row, int column)
+    {
+        if (Board[row, column] == WinBoard[row, column])
+        {
+            return true;
+        }
+        else
+            return false;
+
+    }
+    
+    public bool CheckWin()
     {
         for (int i = 0; i < 4; i++)
         {

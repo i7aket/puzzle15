@@ -1,94 +1,54 @@
 namespace Puzzle15;
 
 public class Game
-{   
-    GameBoard _gameBoard = new GameBoard();
-    ScoreBoard _scoreBoard = new ScoreBoard();
-    Player _player = new Player();
-    string _name = "i7aKeT";
-    private Graphics _graphics = new Graphics();
-    
-    private void PrintTime(object state)
+{
+    GameBoard _gameBoard;
+    ScoreBoard _scoreBoard;
+    Player _player;
+    Graphics _component;
+    private Timer timer;
+
+    public Game()
     {
-        _graphics.ChangeMovesAndTime(_gameBoard.Moves.ToString(), _player.TimeSpent());
+        _gameBoard = new GameBoard();
+        _scoreBoard = new ScoreBoard();
+        _player = new Player();
+        _component = new Graphics(_player, _gameBoard ,_scoreBoard);
     }
-    
-    public void Begin ()
-    {
-        _graphics.ChangeName(_name);
-        _scoreBoard.NewSFile();    
-        _scoreBoard.LoadList();
-        _graphics.InitScoreBoard(_scoreBoard.List);
-        _gameBoard.Shuffle();
-        _graphics.InitBoard(_gameBoard);
-        Play();
-    }
+
     void NewGame()
     {
-        _player = new Player(_name);
+        _player = new Player();
         _gameBoard = new GameBoard();
-        _graphics = new Graphics();
-        _graphics.ChangeName(_name);
-        _gameBoard.Shuffle();
-        _graphics.InitScoreBoard(_scoreBoard.List);
-        _graphics.InitBoard(_gameBoard);
+        _component = new Graphics(_player, _gameBoard ,_scoreBoard);
+    }
+    void ChangeName()
+    {
+        _component.ChangeName();
+        _player.ChangeName();
+        _component = new Graphics(_player, _gameBoard ,_scoreBoard);
     }
     
-    private void ChangeName()
+    public void Begin()
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.SetCursorPosition(73,1);
-        Console.WriteLine("Type your Name");
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.SetCursorPosition(73,1);
-        _name = Console.ReadLine();
-        _player.ChangeName(_name);
-        _graphics = new Graphics();
-        _graphics.ChangeName(_player.Name);
-        _graphics.InitScoreBoard(_scoreBoard.List);
-    }
-    private bool CheckWin()
-    {
-        if (_gameBoard.СheckWin())
-        {
-            _graphics.ShowYouWon();
-            _player.TimeSpent();
-            _player.SetMoves(_gameBoard.Moves);
-            _scoreBoard.List.Add(_player);
-            _scoreBoard.Sort();
-            _scoreBoard.SaveList();
-            Console.ReadKey(); 
-            NewGame();
-            return true;
-        }
-        else return false;
-    }
-    
-    private void Play()
-    {
+        timer = new Timer(e => { _component.ChangeTime(_player); }, null, 1000, 1000);
+        
         ConsoleKeyInfo e;
         do
         {
-            TimerCallback timerCallback = new TimerCallback(PrintTime);
-            Timer time = new Timer(timerCallback, null, 0, 1000);
-            
             e = Console.ReadKey();
             switch (e.Key)
             {
-                case ConsoleKey.RightArrow when _gameBoard.ZeroPosX < 3:
-                    _gameBoard.MoveTile("Right", 1);
+                case ConsoleKey.RightArrow: _gameBoard.Move("Right");
                     break;
 
-                case ConsoleKey.DownArrow when _gameBoard.ZeroPosY < 3:
-                    _gameBoard.MoveTile("Down", 1);
+                case ConsoleKey.DownArrow: _gameBoard.Move("Down");
                     break;
 
-                case ConsoleKey.LeftArrow when _gameBoard.ZeroPosX > 0:
-                    _gameBoard.MoveTile("Left", 1);
+                case ConsoleKey.LeftArrow: _gameBoard.Move("Left");
                     break;
 
-                case ConsoleKey.UpArrow when _gameBoard.ZeroPosY > 0:
-                    _gameBoard.MoveTile("Up", 1);
+                case ConsoleKey.UpArrow: _gameBoard.Move("Up");
                     break;
 
                 //New Game
@@ -97,24 +57,38 @@ public class Game
                     break;
 
                 case ConsoleKey.C:
-                    time.Dispose();
+                    timer.Change(Timeout.Infinite,  Timeout.Infinite);
                     ChangeName();
+                    timer.Change(1000, 1000);
                     break;
 
                 //debugging win condition
                 case ConsoleKey.W:
-                    time.Dispose();
                     _gameBoard.DefaultPosition();
                     break;
-
-                //for debug cases
+                
                 case ConsoleKey.D:
+                    Console.ReadKey();
                     break;
+                
+                
             }
-            _graphics.ChangeMovesAndTime(_gameBoard.Moves.ToString(), _player.TimeSpent());
-            _graphics.InitBoard(_gameBoard);
-            time.Dispose();
-            CheckWin();
+            _component.ChangeMoves(_gameBoard);
+            _component.InitBoard(_gameBoard);
+
+            if (_gameBoard.CheckWin())
+            {
+                timer.Change(Timeout.Infinite,  Timeout.Infinite);
+                _component.ShowYouWon();
+                _player.TimeSpent();
+                _player.SetMoves(_gameBoard);
+                _scoreBoard.AddPlayer(_player);
+                _scoreBoard.Sort();
+                _scoreBoard.SaveList();
+                Console.ReadKey();
+                NewGame();
+                timer.Change(1000,  1000);
+            }
         } while (e.Key != ConsoleKey.Escape);
     }
 }

@@ -14,6 +14,8 @@
       <Compile Remove="Scores.cs" />
       <Compile Remove="Texts.cs" />
       <Compile Remove="Display.cs" />
+      <Compile Remove="Timer.cs" />
+      <Compile Remove="Component.cs" />
     </ItemGroup>
 
 </Project>
