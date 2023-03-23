@@ -19,11 +19,6 @@ public class ComponentBox
         this.ShiftX = shiftX;
         this.ShiftY = shiftY;
         this.Color = color;
-        this.Str = ToArray(str);
-    }
-    private string[] ToArray(string str)
-    { 
-        string[] arr = new string[] {str};
-        return arr;
+        this.Str = new string[] {str};
     }
 }
