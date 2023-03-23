@@ -6,20 +6,13 @@ public class ComponentNumber
     
     public ComponentNumber (int n)
     {
-        this.Number = GetNumber(n);
+        this.Number = new string [_numbers.GetLength(1)];
+
+        for (int i = 0; i < _numbers.GetLength(1); i++)
+            this.Number [i] = _numbers[n,i];
     }
 
-    private string[] GetNumber(int el)
-    {
-        string[] element = new string [_numbers.GetLength(1)];
-
-        for (int i = 0; i < element.Length; i++)
-            element[i] = _numbers[el,i];
-        
-        return element;
-    } 
-    
-     private readonly string[,] _numbers = {
+    private readonly string[,] _numbers = {
             {
                 "               ",
                 "               ",
