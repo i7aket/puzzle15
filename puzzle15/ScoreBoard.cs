@@ -9,7 +9,7 @@ public class ScoreBoard
         
     }
     
-    List<Player> List = new List<Player>();
+    List<Player> _list = new List<Player>();
 
     void NewSaveFile(Boolean append = true)
     {
@@ -20,7 +20,7 @@ public class ScoreBoard
     public void SaveList()
     {
         using StreamWriter save = new StreamWriter("s.txt");
-        foreach (var el in List)
+        foreach (var el in _list)
             save.WriteLine($"{el.Name}§{el.StartTime}§{el.FinishTime}§{el.Ts}§{el.Moves}");
     }
     
@@ -36,48 +36,48 @@ public class ScoreBoard
                 DateTime.Parse(line[2]), 
                 TimeSpan.Parse(line[3]), 
                 int.Parse(line[4]));
-            List.Add(loadPlayer);
+            _list.Add(loadPlayer);
         }
     }
 
     public int CountPlayers()
     {
-        return List.Count;
+        return _list.Count;
     }
 
-    public string playerName(int n)
+    public string PlayerName(int n)
     {
-        return List[n].Name;
+        return _list[n].Name;
     }
     
-    public string playerTime(int n)
+    public string PlayerTime(int n)
     {
-        return List[n].Ts.ToString(@"mm\:ss");
+        return _list[n].Ts.ToString(@"mm\:ss");
     }
     
-    public string playerMoves(int n)
+    public string PlayerMoves(int n)
     {
-        return List[n].Moves.ToString();
+        return _list[n].Moves.ToString();
     }
     
     public void AddPlayer(Player player)
     {
-        List.Add(player);
+        _list.Add(player);
     }
     
     
     public void Sort()
     {
-        if (List.Count > 0)
+        if (_list.Count > 0)
         {
-            for (int indexLower = 0; indexLower < List.Count; indexLower++) {
+            for (int indexLower = 0; indexLower < _list.Count; indexLower++) {
 
-                for (int i = indexLower + 1; i < List.Count; i++)
+                for (int i = indexLower + 1; i < _list.Count; i++)
                 {
-                    int result = TimeSpan.Compare(List[indexLower].Ts, List[i].Ts);
+                    int result = TimeSpan.Compare(_list[indexLower].Ts, _list[i].Ts);
                     if (result > 0)
                     {
-                        (List[i], List[indexLower]) = (List[indexLower], List[i]);
+                        (_list[i], _list[indexLower]) = (_list[indexLower], _list[i]);
                     }
                 }
             }

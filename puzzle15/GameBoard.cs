@@ -17,7 +17,7 @@ public class GameBoard
         {13,14,15,0},
     };
     
-    public readonly int [,] WinBoard  =
+    private readonly int [,] _winBoard  =
     {
         {1,2,3,4},
         {5,6,7,8},
@@ -52,7 +52,7 @@ public class GameBoard
         {
             for (int j = 0; j < 4; j++)
             {
-                Board[i, j] = WinBoard[i, j];
+                Board[i, j] = _winBoard[i, j];
             } 
         }
     }
@@ -116,7 +116,7 @@ public class GameBoard
     
     public bool CheckPosition(int row, int column)
     {
-        if (Board[row, column] == WinBoard[row, column])
+        if (Board[row, column] == _winBoard[row, column])
         {
             return true;
         }
@@ -131,7 +131,7 @@ public class GameBoard
         {
             for (int j = 0; j < 4; j++)
             {
-                if (Board[i, j] != WinBoard[i, j])
+                if (Board[i, j] != _winBoard[i, j])
                 {
                     return false;
                 }

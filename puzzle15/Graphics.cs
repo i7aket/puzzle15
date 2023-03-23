@@ -1,56 +1,30 @@
-using System.ComponentModel;
-
 namespace Puzzle15;
 
 public class Graphics
 {
-    public int ShiftX;
-    public int ShiftY;
-    public ConsoleColor color;
-    public string label;
-    
-    
     public Graphics (Player player, GameBoard gameBoard, ScoreBoard scoreBoard)
     {
         Console.Clear();
-        Output.Layer0();
+        ConsoleOutput.PrintLayer0();
         
-        Output.Layer1CharBox(1, 65, 6, 29, ' ');
-        Output.Layer1CharBox(8, 65, 6, 29, ' ');
-        Output.Layer1CharBox(15, 65, 13, 29, ' ');
+        ConsoleOutput.PrintEmptyBox(1, 65, 6, 29);
+        ConsoleOutput.PrintEmptyBox(8, 65, 6, 29);
+        ConsoleOutput.PrintEmptyBox(15, 65, 13, 29);
 
-        Output.Layer2(1,65, ConsoleColor.Green, _nameMovesTimes);
-        Output.Layer2(1,73, ConsoleColor.Green, player.Name);
-        Output.Layer2(3,73, ConsoleColor.Green, "0"); //Moves
-        Output.Layer2(5,73, ConsoleColor.Green, "00:00"); //Time
-
-        
-        Output.Layer2(8,65, ConsoleColor.Green, _howToPlay);
-        Output.Layer2(11,74, ConsoleColor.Red, "esc");
-        Output.Layer2(12,75, ConsoleColor.Red, "N");
-        Output.Layer2(13,74, ConsoleColor.Red, "C");
-        
-        Output.Layer2(15,66, ConsoleColor.Green, _scoreTable);
+        new ConsoleOutput(65,1, ConsoleColor.Green, NameMovesTimes);
+        new ConsoleOutput(73,1, ConsoleColor.Green, player.Name);
+        new ConsoleOutput(73,3, ConsoleColor.Green, "0"); //Moves
+        new ConsoleOutput(73,5, ConsoleColor.Green, "00:00"); //Time
+        new ConsoleOutput(65,8, ConsoleColor.Green, HowToPlay);
+        new ConsoleOutput(74,11, ConsoleColor.Red, "esc");
+        new ConsoleOutput(75,12, ConsoleColor.Red, "N");
+        new ConsoleOutput(74,13, ConsoleColor.Red, "C");
+        new ConsoleOutput(66,15, ConsoleColor.Green, "Name            Time  Moves");
         
         InitBoard(gameBoard);
         InitScoreBoard(scoreBoard);
-        
     }
     
-    public Graphics(int ShiftX, int ShiftY, ConsoleColor color, string label)
-    {
-        this.ShiftX = ShiftX;
-        this.ShiftY = ShiftY;
-        this.color = color;
-        this.label = label;
-    }
-
-    /*public void OutPut()
-    {
-        _output.Layer3();
-    }*/
-    
-    private static string _sometext = "SOME TEXT";
 
     public void InitBoard(GameBoard board)
     {
@@ -62,18 +36,18 @@ public class Graphics
             for (int column = 0; column < 4; column++)
             {
                 ConsoleColor color = board.CheckPosition(row,column) ? ConsoleColor.Green : ConsoleColor.Yellow;
-                
-                Output.Layer3(new (shiftX,shiftY, color, board.Board[row,column]));
+
+                string[] numberTile = new ComponentNumber(board.Board[row, column]).Number; 
+                new ConsoleOutput(shiftX,shiftY, color, numberTile);
                 
                 shiftX += 16;
             }
             shiftY += 7;
         }
-        
         Console.SetCursorPosition(0, 30);
     }
-    
-    public void InitScoreBoard(ScoreBoard scoreBoard)
+
+    private void InitScoreBoard(ScoreBoard scoreBoard)
     {
         int shiftY = 16;
         int shiftX = 66;
@@ -97,48 +71,36 @@ public class Graphics
                 color = ConsoleColor.Green;
             }
             
-            Output.Layer2(shiftY+n, shiftX, color, scoreBoard.playerName(n));
-            Output.Layer2(shiftY+n, shiftX + shiftTimeX, color, scoreBoard.playerTime(n));
-            Output.Layer2(shiftY+n, shiftX + shiftMovesX, color, scoreBoard.playerMoves(n));
+            new ConsoleOutput(shiftX, shiftY+n, color, scoreBoard.PlayerName(n));
+            new ConsoleOutput (shiftX + shiftTimeX,shiftY+n, color, scoreBoard.PlayerTime(n));
+            new ConsoleOutput (shiftX + shiftMovesX,shiftY+n, color, scoreBoard.PlayerMoves(n));
         }
     }
     
     public void ChangeTime(Player player )
     {
-        Output.Layer2(5, 73, ConsoleColor.Green, player.TimeSpent());
+        new ConsoleOutput(73, 5, ConsoleColor.Green, player.TimeSpent());
     }
     
     public void ChangeMoves(GameBoard gameBoard)
     {
-        Output.Layer2(3, 73, ConsoleColor.Green, gameBoard.GetMoves());
+        new ConsoleOutput(73, 3, ConsoleColor.Green, gameBoard.GetMoves());
     }
     
     public void ChangeName()
     {
-        showEmptyName();
-        Console.SetCursorPosition(73,1);
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("Type your Name");
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.SetCursorPosition(73,1);
-    }
-    
-    public void showEmptyName ()
-    {
-        Output.Layer1CharBox(1, 73, 1, 21, ' ');
+        ConsoleOutput.PrintEmptyBox(1, 73, 1, 21);
+        new ConsoleOutput (73,1, ConsoleColor.Red, "Type your Name");
+        new ConsoleOutput (73,1, ConsoleColor.Green, "");
     }
     
     public void ShowYouWon()
     {
-        Output.Layer2(4, 15, ConsoleColor.Red, _win0);
-        Output.Layer2(20, 30, ConsoleColor.Red, _win1);
+        new ConsoleOutput(15, 4, ConsoleColor.Red, Win);
+        new ConsoleOutput(30, 20, ConsoleColor.Red, "Press any key to start new game");
     }
     
-    private readonly string _scoreTable = "Name            Time  Moves";
-    
-    public readonly string EmptyNameField = "                ";
-
-    private readonly string[] _nameMovesTimes =
+    private readonly string[] NameMovesTimes =
     {
         " Name:                       ",
         "                             ",
@@ -148,7 +110,7 @@ public class Graphics
         "                             "
     };
 
-    private readonly string[] _howToPlay =
+    private readonly string[] HowToPlay =
     {
         "   Use cursor control keys   ",
         " (the arrows) to move blocks ",
@@ -158,7 +120,7 @@ public class Graphics
         "   Press C to change name    ",
     };
 
-    private readonly string[] _win0 =
+    private readonly string[] Win =
     {
         " ██████╗ ██████╗ ███╗   ██╗ ██████╗ ██████╗  █████╗ ████████╗███████╗",
         "██╔════╝██╔═══██╗████╗  ██║██╔════╝ ██╔══██╗██╔══██╗╚══██╔══╝██╔════╝",
@@ -175,7 +137,6 @@ public class Graphics
         " ██╗   ██║   ╚██████╔╝╚██████╔╝    ╚███╔███╔╝╚██████╔╝██║ ╚████║██╗  ",
         " ╚═╝   ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝  ",
     };
-
-    private readonly string _win1 = "Press any key to start new game";
+    
     
 }

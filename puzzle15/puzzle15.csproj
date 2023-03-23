@@ -16,6 +16,8 @@
       <Compile Remove="Display.cs" />
       <Compile Remove="Timer.cs" />
       <Compile Remove="Component.cs" />
+      <Compile Remove="ComponentsStrArr.cs" />
+      <Compile Remove="TTimer.cs" />
     </ItemGroup>
 
 </Project>

@@ -32,17 +32,16 @@ public class Player
         save.Write("");
     }
 
-    public void SaveName()
+    private void SaveName()
     {
         using StreamWriter save = new StreamWriter("n.txt");
         save.Write(Name);
     }
 
-    public void LoadName()
+    private void LoadName()
     {
         using var load = new StreamReader("n.txt");
-        Name = load.ReadLine();
-        if (Name == null) Name = "please change name";
+        Name = load.ReadLine() ?? "please change name";
     }
 
     public void SetMoves(GameBoard board)
