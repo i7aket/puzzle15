@@ -6,7 +6,7 @@ public class Game
     ScoreBoard _scoreBoard;
     Player _player;
     Graphics _graphics;
-    private Timer timer;
+    private Timer _timer;
 
     public Game()
     {
@@ -30,9 +30,9 @@ public class Game
         _graphics = new Graphics(_player, _gameBoard ,_scoreBoard);
     }
     
-    public void Begin()
+    private void Begin()
     {
-        timer = new Timer(e => { _graphics.ChangeTime(_player); }, null, 1000, 1000);
+        _timer = new Timer(e => { _graphics.ChangeTime(_player); }, null, 1000, 1000);
         
         ConsoleKeyInfo e;
         do
@@ -58,9 +58,9 @@ public class Game
                     break;
 
                 case ConsoleKey.C:
-                    timer.Change(Timeout.Infinite,  Timeout.Infinite);
+                    _timer.Change(Timeout.Infinite,  Timeout.Infinite);
                     ChangeName();
-                    timer.Change(1000, 1000);
+                    _timer.Change(1000, 1000);
                     break;
 
                 //debugging win condition
@@ -79,7 +79,7 @@ public class Game
 
             if (_gameBoard.CheckWin())
             {
-                timer.Change(Timeout.Infinite,  Timeout.Infinite);
+                _timer.Change(Timeout.Infinite,  Timeout.Infinite);
                 _graphics.ShowYouWon();
                 _player.TimeSpent();
                 _player.SetMoves(_gameBoard);
@@ -88,7 +88,7 @@ public class Game
                 _scoreBoard.SaveList();
                 Console.ReadKey();
                 NewGame();
-                timer.Change(1000,  1000);
+                _timer.Change(1000,  1000);
             }
         } while (e.Key != ConsoleKey.Escape);
     }

@@ -2,10 +2,16 @@ namespace Puzzle15;
 
 public class ComponentBox
 {
-    public int ShiftX { get; private set;} 
-    public int ShiftY { get; private set;} 
-    public ConsoleColor Color { get; private set;}
-    public string[] Str { get; private set;}
+    public int ShiftX;
+    public int ShiftY;
+    public ConsoleColor Color;
+    public string[] Str;
+    
+    
+    public ComponentBox ()
+    {
+        
+    }
     
     public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string[] str)
     {
@@ -14,11 +20,37 @@ public class ComponentBox
         this.Color = color;
         this.Str = str;
     }
+    
     public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string str)
     {
         this.ShiftX = shiftX;
         this.ShiftY = shiftY;
         this.Color = color;
         this.Str = new string[] {str};
+    }
+
+    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string str)
+    {
+        ShiftX = shiftX;
+        ShiftY = shiftY;
+        Color = color;
+        Str = new string[] {str};
+        return this;
+    }
+    
+    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string[] str)
+    {
+        ShiftX = shiftX;
+        ShiftY = shiftY;
+        Color = color;
+        Str = str;
+        return this; 
+    }
+    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color)
+    {
+        ShiftX = shiftX;
+        ShiftY = shiftY;
+        Color = color;
+        return this; 
     }
 }

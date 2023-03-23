@@ -2,14 +2,21 @@ namespace Puzzle15;
 
 public class ComponentNumber
 {
-    public string[] Number { get; private set;}
-    
-    public ComponentNumber (int n)
-    {
-        this.Number = new string [_numbers.GetLength(1)];
 
-        for (int i = 0; i < _numbers.GetLength(1); i++)
-            this.Number [i] = _numbers[n,i];
+    public Dictionary<int, string[]> Numbers = new Dictionary<int, string[]>();
+
+    public ComponentNumber()
+    {
+        for (int i = 0; i < _numbers.GetLength(0); i++)
+        {
+            
+            string [] arr = new string [_numbers.GetLength(1)];    
+
+            for (int n = 0; n < _numbers.GetLength(1); n++)
+                arr [n] = _numbers[i,n];
+
+            Numbers.Add(i, arr);
+        }
     }
 
     private readonly string[,] _numbers = {

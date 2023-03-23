@@ -1,18 +1,8 @@
 namespace Puzzle15;
 
 public class ConsoleOutput
-{
-    public ConsoleOutput (int shiftX, int shiftY, ConsoleColor color, string[] str)
-    {
-        ConsoleOutput.Print(new ComponentBox(shiftX, shiftY, color, str));
-    }
-    
-    public ConsoleOutput (int shiftX, int shiftY, ConsoleColor color, string str)
-    {
-        ConsoleOutput.Print(new ComponentBox(shiftX, shiftY, color, str));
-    }
-        
-    public static void PrintLayer0()
+{ 
+    public void PrintLayer0()
     {
         Console.Clear();
         for (var y = 0; y < 29; y++)
@@ -26,7 +16,7 @@ public class ConsoleOutput
         }
     }
     
-    public static void PrintEmptyBox(int shiftY, int shiftX, int height, int width)
+    public void PrintEmptyBox(int shiftY, int shiftX, int height, int width)
     {
         for (var y = 0; y < height; y++)
         {
@@ -39,7 +29,7 @@ public class ConsoleOutput
         }
     }
     
-    private static void Print(ComponentBox componentBox)    
+    public void Print(ComponentBox componentBox)    
     {
         for (int line = 0; line < componentBox.Str.Length; line++)
         {
