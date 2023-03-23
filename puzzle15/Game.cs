@@ -5,7 +5,7 @@ public class Game
     GameBoard _gameBoard;
     ScoreBoard _scoreBoard;
     Player _player;
-    Graphics _component;
+    Graphics _graphics;
     private Timer timer;
 
     public Game()
@@ -13,25 +13,26 @@ public class Game
         _gameBoard = new GameBoard();
         _scoreBoard = new ScoreBoard();
         _player = new Player();
-        _component = new Graphics(_player, _gameBoard ,_scoreBoard);
+        _graphics = new Graphics(_player, _gameBoard ,_scoreBoard);
+        Begin();
     }
 
     void NewGame()
     {
         _player = new Player();
         _gameBoard = new GameBoard();
-        _component = new Graphics(_player, _gameBoard ,_scoreBoard);
+        _graphics = new Graphics(_player, _gameBoard ,_scoreBoard);
     }
     void ChangeName()
     {
-        _component.ChangeName();
+        _graphics.ChangeName();
         _player.ChangeName();
-        _component = new Graphics(_player, _gameBoard ,_scoreBoard);
+        _graphics = new Graphics(_player, _gameBoard ,_scoreBoard);
     }
     
     public void Begin()
     {
-        timer = new Timer(e => { _component.ChangeTime(_player); }, null, 1000, 1000);
+        timer = new Timer(e => { _graphics.ChangeTime(_player); }, null, 1000, 1000);
         
         ConsoleKeyInfo e;
         do
@@ -73,13 +74,13 @@ public class Game
                 
                 
             }
-            _component.ChangeMoves(_gameBoard);
-            _component.InitBoard(_gameBoard);
+            _graphics.ChangeMoves(_gameBoard);
+            _graphics.InitBoard(_gameBoard);
 
             if (_gameBoard.CheckWin())
             {
                 timer.Change(Timeout.Infinite,  Timeout.Infinite);
-                _component.ShowYouWon();
+                _graphics.ShowYouWon();
                 _player.TimeSpent();
                 _player.SetMoves(_gameBoard);
                 _scoreBoard.AddPlayer(_player);

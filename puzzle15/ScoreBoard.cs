@@ -4,31 +4,12 @@ public class ScoreBoard
 {
     public ScoreBoard ()
     {
-        NewSaveFile();
-        LoadList();
-        
-    }
-    
-    List<Player> _list = new List<Player>();
-
-    void NewSaveFile(Boolean append = true)
-    {
-        using StreamWriter save = new StreamWriter("s.txt", append);
+        using StreamWriter save = new StreamWriter("s.txt", true);
         save.Write("");
-    }
-    
-    public void SaveList()
-    {
-        using StreamWriter save = new StreamWriter("s.txt");
-        foreach (var el in _list)
-            save.WriteLine($"{el.Name}§{el.StartTime}§{el.FinishTime}§{el.Ts}§{el.Moves}");
-    }
-    
-    public void LoadList()
-    {
+        
         string? s;
-        using var save = new StreamReader("s.txt");
-        while ((s = save.ReadLine()) != null)
+        using var load = new StreamReader("s.txt");
+        while ((s = load.ReadLine()) != null)
         {
             string[] line = s.Split('§');
             Player loadPlayer = new Player(line[0], 
@@ -39,7 +20,16 @@ public class ScoreBoard
             _list.Add(loadPlayer);
         }
     }
+    
+    List<Player> _list = new List<Player>();
 
+    public void SaveList()
+    {
+        using StreamWriter save = new StreamWriter("s.txt");
+        foreach (var el in _list)
+            save.WriteLine($"{el.Name}§{el.StartTime}§{el.FinishTime}§{el.Ts}§{el.Moves}");
+    }
+    
     public int CountPlayers()
     {
         return _list.Count;

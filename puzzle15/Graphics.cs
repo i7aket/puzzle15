@@ -11,11 +11,11 @@ public class Graphics
         ConsoleOutput.PrintEmptyBox(8, 65, 6, 29);
         ConsoleOutput.PrintEmptyBox(15, 65, 13, 29);
 
-        new ConsoleOutput(65,1, ConsoleColor.Green, NameMovesTimes);
+        new ConsoleOutput(65,1, ConsoleColor.Green, _nameMovesTimes);
         new ConsoleOutput(73,1, ConsoleColor.Green, player.Name);
         new ConsoleOutput(73,3, ConsoleColor.Green, "0"); //Moves
         new ConsoleOutput(73,5, ConsoleColor.Green, "00:00"); //Time
-        new ConsoleOutput(65,8, ConsoleColor.Green, HowToPlay);
+        new ConsoleOutput(65,8, ConsoleColor.Green, _howToPlay);
         new ConsoleOutput(74,11, ConsoleColor.Red, "esc");
         new ConsoleOutput(75,12, ConsoleColor.Red, "N");
         new ConsoleOutput(74,13, ConsoleColor.Red, "C");
@@ -96,11 +96,11 @@ public class Graphics
     
     public void ShowYouWon()
     {
-        new ConsoleOutput(15, 4, ConsoleColor.Red, Win);
+        new ConsoleOutput(15, 4, ConsoleColor.Red, _win);
         new ConsoleOutput(30, 20, ConsoleColor.Red, "Press any key to start new game");
     }
     
-    private readonly string[] NameMovesTimes =
+    private readonly string[] _nameMovesTimes =
     {
         " Name:                       ",
         "                             ",
@@ -110,7 +110,7 @@ public class Graphics
         "                             "
     };
 
-    private readonly string[] HowToPlay =
+    private readonly string[] _howToPlay =
     {
         "   Use cursor control keys   ",
         " (the arrows) to move blocks ",
@@ -120,7 +120,7 @@ public class Graphics
         "   Press C to change name    ",
     };
 
-    private readonly string[] Win =
+    private readonly string[] _win =
     {
         " ██████╗ ██████╗ ███╗   ██╗ ██████╗ ██████╗  █████╗ ████████╗███████╗",
         "██╔════╝██╔═══██╗████╗  ██║██╔════╝ ██╔══██╗██╔══██╗╚══██╔══╝██╔════╝",

@@ -1,12 +1,9 @@
-using System.Security.AccessControl;
-
 namespace Puzzle15;
 
 public class GameBoard
 {
-    
-    public int ZeroPosX { get; private set;}= 3;
-    public int ZeroPosY { get; private set;}= 3;
+    private int ZeroPosX { get; set;}= 3;
+    private int ZeroPosY { get; set;}= 3;
     public int Moves { get; private set;}= 0;
 
     public int [,] Board  { get; private set;}=
@@ -29,8 +26,8 @@ public class GameBoard
     {
         Shuffle();
     }
-    
-    public void Shuffle()
+
+    private void Shuffle()
     {
         Random random = new Random();
         for (int i = 0; i < 20; i++)

@@ -13,7 +13,10 @@ public class Player
         Moves = 0;
         StartTime = DateTime.Now;
         Ts = DateTime.Now - StartTime;
-        NewNameFile();
+        
+        using StreamWriter save = new StreamWriter("n.txt", true);
+        save.Write("");
+        
         LoadName();
     }
 
@@ -24,12 +27,6 @@ public class Player
         FinishTime = finishTime;
         Ts = ts;
         Moves = moves;
-    }
-
-    void NewNameFile(Boolean append = true)
-    {
-        using StreamWriter save = new StreamWriter("n.txt", append);
-        save.Write("");
     }
 
     private void SaveName()
