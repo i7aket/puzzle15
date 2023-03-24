@@ -4,7 +4,7 @@ public class ComponentBox
 {
     public int ShiftX { get; private set;}
     public int ShiftY { get; private set;}
-    public ConsoleColor Color{ get; private set;}
+    public ConsoleColor Color{ get; private set;}  
     public string[] Arr{ get; private set;}
     
 
@@ -15,23 +15,23 @@ public class ComponentBox
         Color = color;
         Arr = arr;
     }
-    
     public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string str) : this(shiftX, shiftY, color, new string[] {str})
     {
     }
-
-    public ComponentBox (string[] arr) : this(new int(), new int(), new ConsoleColor(), arr)
+    
+    public ComponentBox (string[] arr)
+    {
+        Arr = arr;
+    }
+    public ComponentBox () : this(string.Empty)
     {
     }
     
     public ComponentBox (string str) : this (new string []  {str})
     {
     }
-    
-    public ComponentBox () : this("")
-    {
-    }
-    
+
+
     
     public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string str)
     {
