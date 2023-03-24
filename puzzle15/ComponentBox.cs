@@ -17,7 +17,6 @@ public class ComponentBox
     public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string str) : this(shiftX, shiftY, color, new string[] {str})
     {
     }
-    
     public ComponentBox (string[] arr)
     {
         Arr = arr;
@@ -29,27 +28,6 @@ public class ComponentBox
     public ComponentBox (string str) : this (new string []  {str})
     {
     }
-
-
-    
-    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string str)
-    {
-        ShiftX = shiftX;
-        ShiftY = shiftY;
-        Color = color;
-        Arr = new string[] {str};
-        return this;
-    }
-    
-    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string[] str)
-    {
-        ShiftX = shiftX;
-        ShiftY = shiftY;
-        Color = color;
-        Arr = str;
-        return this; 
-    }
-    
     public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color)
     {
         ShiftX = shiftX;
@@ -57,16 +35,25 @@ public class ComponentBox
         Color = color;
         return this; 
     }
-
-    public ComponentBox Set(string str)
-    {
-        Arr = new string[] {str};
-        return this; 
-    }
     public ComponentBox Set(string []str)
     {
         Arr = str;
         return this; 
     }
-    
+    public ComponentBox Set(string str)
+    {
+        Set(new string[] { str });
+        return this; 
+    }
+    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string str)
+    {
+        Set(shiftX, shiftY, color, new string[] { str });
+        return this;
+    }
+    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string[] str)
+    {
+        Set(shiftX, shiftY, color);
+        Set(str);
+        return this; 
+    }
 }
