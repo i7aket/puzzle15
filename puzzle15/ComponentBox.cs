@@ -28,7 +28,7 @@ public class ComponentBox
     {
     }
     
-    public ComponentBox () : this(""))
+    public ComponentBox () : this("")
     {
     }
     
