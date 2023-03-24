@@ -3,7 +3,7 @@ namespace Puzzle15;
 public class GameBoard
 {
     private int ZeroPosX { get; set;}= 3;
-    private int ZeroPosY { get; set;}= 3;
+    private int ZeroPosY{ get; set;}= 3;
     public int Moves { get; private set;}= 0;
 
     public int [,] Board  { get; private set;}=

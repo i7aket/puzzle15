@@ -31,11 +31,11 @@ public class ConsoleOutput
     
     public void Print(ComponentBox componentBox)    
     {
-        for (int line = 0; line < componentBox.Str.Length; line++)
+        for (int line = 0; line < componentBox.Arr.Length; line++)
         {
             Console.ForegroundColor = componentBox.Color;
             Console.SetCursorPosition(componentBox.ShiftX, componentBox.ShiftY+line);
-            Console.Write(componentBox.Str[line]);    
+            Console.Write(componentBox.Arr[line]);    
         }
     }
 }

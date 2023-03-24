@@ -2,41 +2,34 @@ namespace Puzzle15;
 
 public class ComponentBox
 {
-    public int ShiftX;
-    public int ShiftY;
-    public ConsoleColor Color;
-    public string[] Str;
+    public int ShiftX { get; private set;}
+    public int ShiftY { get; private set;}
+    public ConsoleColor Color{ get; private set;}
+    public string[] Arr{ get; private set;}
     
     
     public ComponentBox ()
     {
-        
     }
     
-    public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string[] str)
+    public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string[] arr)
     {
-        this.ShiftX = shiftX;
-        this.ShiftY = shiftY;
-        this.Color = color;
-        this.Str = str;
+        ShiftX = shiftX;
+        ShiftY = shiftY;
+        Color = color;
+        Arr = arr;
     }
     
-    public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string str)
+    public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string str) : this(shiftX, shiftY, color, new string[] {str})
     {
-        this.ShiftX = shiftX;
-        this.ShiftY = shiftY;
-        this.Color = color;
-        this.Str = new string[] {str};
     }
 
-    public ComponentBox (string[] str)
+    public ComponentBox (string[] arr) : this(0, 0, ConsoleColor.Black, arr)
     {
-        this.Str = str;
     }
     
-    public ComponentBox (string str)
+    public ComponentBox (string str) : this (new string[] {str})
     {
-        this.Str = new string[] {str};
     }
     
     public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string str)
@@ -44,7 +37,7 @@ public class ComponentBox
         ShiftX = shiftX;
         ShiftY = shiftY;
         Color = color;
-        Str = new string[] {str};
+        Arr = new string[] {str};
         return this;
     }
     
@@ -53,7 +46,7 @@ public class ComponentBox
         ShiftX = shiftX;
         ShiftY = shiftY;
         Color = color;
-        Str = str;
+        Arr = str;
         return this; 
     }
     
@@ -67,12 +60,12 @@ public class ComponentBox
 
     public ComponentBox Set(string str)
     {
-        Str = new string[] {str};
+        Arr = new string[] {str};
         return this; 
     }
     public ComponentBox Set(string []str)
     {
-        Str = str;
+        Arr = str;
         return this; 
     }
     
