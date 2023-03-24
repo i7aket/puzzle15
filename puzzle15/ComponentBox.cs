@@ -7,11 +7,7 @@ public class ComponentBox
     public ConsoleColor Color{ get; private set;}
     public string[] Arr{ get; private set;}
     
-    
-    public ComponentBox ()
-    {
-    }
-    
+
     public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string[] arr)
     {
         ShiftX = shiftX;
@@ -24,13 +20,18 @@ public class ComponentBox
     {
     }
 
-    public ComponentBox (string[] arr) : this(0, 0, ConsoleColor.Black, arr)
+    public ComponentBox (string[] arr) : this(new int(), new int(), new ConsoleColor(), arr)
     {
     }
     
-    public ComponentBox (string str) : this (new string[] {str})
+    public ComponentBox (string str) : this (new string []  {str})
     {
     }
+    
+    public ComponentBox () : this(""))
+    {
+    }
+    
     
     public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string str)
     {
