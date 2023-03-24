@@ -1,4 +1,4 @@
-﻿// puzzle15 version 0.62
+﻿// puzzle15 version 0.64
 
 namespace Puzzle15;
 internal class Program

@@ -16,7 +16,7 @@ public class ConsoleOutput
         }
     }
     
-    public void PrintEmptyBox(int shiftY, int shiftX, int height, int width)
+    public void PrintEmptyBox(int shiftX, int shiftY, int height, int width)
     {
         for (var y = 0; y < height; y++)
         {

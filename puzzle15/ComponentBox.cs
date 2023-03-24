@@ -29,6 +29,16 @@ public class ComponentBox
         this.Str = new string[] {str};
     }
 
+    public ComponentBox (string[] str)
+    {
+        this.Str = str;
+    }
+    
+    public ComponentBox (string str)
+    {
+        this.Str = new string[] {str};
+    }
+    
     public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string str)
     {
         ShiftX = shiftX;
@@ -46,6 +56,7 @@ public class ComponentBox
         Str = str;
         return this; 
     }
+    
     public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color)
     {
         ShiftX = shiftX;
@@ -53,4 +64,16 @@ public class ComponentBox
         Color = color;
         return this; 
     }
+
+    public ComponentBox Set(string str)
+    {
+        Str = new string[] {str};
+        return this; 
+    }
+    public ComponentBox Set(string []str)
+    {
+        Str = str;
+        return this; 
+    }
+    
 }
