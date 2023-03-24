@@ -8,12 +8,11 @@ public class ComponentBox
     public string[] Arr{ get; private set;}
     
 
-    public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string[] arr)
+    public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string[] arr) : this(arr)
     {
         ShiftX = shiftX;
         ShiftY = shiftY;
         Color = color;
-        Arr = arr;
     }
     public ComponentBox (int shiftX, int shiftY, ConsoleColor color, string str) : this(shiftX, shiftY, color, new string[] {str})
     {
