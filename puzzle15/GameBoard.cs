@@ -6,8 +6,8 @@ public class GameBoard
 {
     private int ZeroPosX { get; set;}= 3;
     private int ZeroPosY{ get; set;}= 3;
-    private int LastMoveX{ get; set;}
-    private int LastMoveY{ get; set;}
+    public int LastMoveX{ get; private set;}
+    public int LastMoveY{ get; private set;}
     public int Moves { get; private set;}= 0;
 
     public int [,] Board  { get; private set;}=
@@ -126,6 +126,12 @@ public class GameBoard
         if (LastMoveY != ZeroPosY) LastMoveY = ZeroPosY;
     }
 
+    /*public int LastMove()
+    {
+        return Board[LastMoveY, LastMoveX];
+    }*/
+
+
     public bool LastMove(int row, int column)
     {
         if (Board[row, column] == Board[LastMoveY, LastMoveX] || Board[row, column] == Board[ZeroPosY, ZeroPosX]) return true;
@@ -146,11 +152,6 @@ public class GameBoard
         else
             return false;
 
-    }
-
-    public int LastMove()
-    {
-        return Board[LastMoveY, LastMoveX];
     }
 
     public bool CheckWin()

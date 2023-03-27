@@ -33,6 +33,7 @@ public class Graphics
     
     public void InitBoard(GameBoard board, bool fullInit = false)
     {
+
         int shiftY = 1;
         
         for (int row = 0; row < 4; row++)
