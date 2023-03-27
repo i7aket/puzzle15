@@ -40,16 +40,19 @@ public class Graphics
             int shiftX = 1;
             for (int column = 0; column < 4; column++)
             {
-                ConsoleColor color = board.CheckPosition(row,column) ? ConsoleColor.Green : ConsoleColor.Yellow;
-                _components.Numbers[board.Board[row, column]].CoordinatesAndColor(shiftX, shiftY, color);   
-                _consoleOutput.Print(_components.Numbers[board.Board[row, column]]);
-                
+                if (board.LastMove(row, column))
+                {
+                    ConsoleColor color = board.CheckPosition(row, column) ? ConsoleColor.Green : ConsoleColor.Yellow;
+                    _components.Numbers[board.Board[row, column]].CoordinatesAndColor(shiftX, shiftY, color);
+                    _consoleOutput.Print(_components.Numbers[board.Board[row, column]]);
+                }
                 shiftX += 16;
             }
             shiftY += 7;
         }
         Console.SetCursorPosition(0, 30);
     }
+    
 
     private void InitScoreBoard(ScoreBoard scoreBoard)
     {

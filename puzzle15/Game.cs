@@ -69,14 +69,14 @@ public class Game
                     break;
                 
                 case ConsoleKey.D:
-                    Console.ReadKey();
+                    //Console.ReadKey();
                     break;
                 
                 
             }
             _graphics.ChangeMoves(_gameBoard);
             _graphics.InitBoard(_gameBoard);
-
+            
             if (_gameBoard.CheckWin())
             {
                 _timer.Change(Timeout.Infinite,  Timeout.Infinite);

@@ -33,7 +33,6 @@ public class ConsoleOutput
                 Console.SetCursorPosition(shiftX + x, shiftY + y);
                 Console.Write(' ');
             }
-
             Console.WriteLine();
         }
     }
