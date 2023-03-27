@@ -28,32 +28,38 @@ public class ComponentBox
     public ComponentBox (string str) : this (new string []  {str})
     {
     }
-    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color)
+    
+    
+    public ComponentBox CoordinatesAndColor(int shiftX, int shiftY, ConsoleColor color)
     {
         ShiftX = shiftX;
         ShiftY = shiftY;
         Color = color;
         return this; 
     }
-    public ComponentBox Set(string []str)
+    
+    public ComponentBox CoordinatesColorAndString(int shiftX, int shiftY, ConsoleColor color, string str)
+    {
+        CoordinatesColorAndString(shiftX, shiftY, color, new string[] { str });
+        return this;
+    }
+    
+    public ComponentBox CoordinatesColorAndString(int shiftX, int shiftY, ConsoleColor color, string[] str)
+    {
+        CoordinatesAndColor(shiftX, shiftY, color);
+        String(str);
+        return this; 
+    }    
+    
+    public ComponentBox String(string []str)
     {
         Arr = str;
         return this; 
     }
-    public ComponentBox Set(string str)
+    
+    public ComponentBox String(string str)
     {
-        Set(new string[] { str });
-        return this; 
-    }
-    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string str)
-    {
-        Set(shiftX, shiftY, color, new string[] { str });
-        return this;
-    }
-    public ComponentBox Set(int shiftX, int shiftY, ConsoleColor color, string[] str)
-    {
-        Set(shiftX, shiftY, color);
-        Set(str);
+        String(new string[] { str });
         return this; 
     }
 }

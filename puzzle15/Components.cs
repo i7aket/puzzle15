@@ -184,8 +184,6 @@ public class Components
             Numbers.Add(i, new ComponentBox(arr));
         }
         
-        
-        
         Strings.Add("NameMovesTimes", new ComponentBox(65, 1, ConsoleColor.Green, nameMovesTimes));
         Strings.Add("HowToPlay", new ComponentBox(65, 8, ConsoleColor.Green, howToPlay));
         Strings.Add("Name", new ComponentBox(73,1, ConsoleColor.Green, ""));

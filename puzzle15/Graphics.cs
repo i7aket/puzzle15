@@ -17,7 +17,7 @@ public class Graphics
         _consoleOutput.PrintEmptyBox(65, 15, 13, 29);
         
         _consoleOutput.Print(_components.Strings["NameMovesTimes"]);
-        _consoleOutput.Print(_components.Strings["Name"].Set(player.Name));
+        _consoleOutput.Print(_components.Strings["Name"].String(player.Name));
         _consoleOutput.Print(_components.Strings["Moves"]);
         _consoleOutput.Print(_components.Strings["Time"]); 
         _consoleOutput.Print(_components.Strings["HowToPlay"]);
@@ -41,7 +41,7 @@ public class Graphics
             for (int column = 0; column < 4; column++)
             {
                 ConsoleColor color = board.CheckPosition(row,column) ? ConsoleColor.Green : ConsoleColor.Yellow;
-                _components.Numbers[board.Board[row, column]].Set(shiftX, shiftY, color);   
+                _components.Numbers[board.Board[row, column]].CoordinatesAndColor(shiftX, shiftY, color);   
                 _consoleOutput.Print(_components.Numbers[board.Board[row, column]]);
                 
                 shiftX += 16;
@@ -74,20 +74,20 @@ public class Graphics
             {
                 color = ConsoleColor.Green;
             }
-            _consoleOutput.Print(_componentBox.Set(shiftX, shiftY+n, color, scoreBoard.PlayerName(n)));
-            _consoleOutput.Print(_componentBox.Set(shiftX + shiftTimeX,shiftY+n, color, scoreBoard.PlayerTime(n)));
-            _consoleOutput.Print(_componentBox.Set (shiftX + shiftMovesX,shiftY+n, color, scoreBoard.PlayerMoves(n)));
+            _consoleOutput.Print(_componentBox.CoordinatesColorAndString(shiftX, shiftY+n, color, scoreBoard.PlayerName(n)));
+            _consoleOutput.Print(_componentBox.CoordinatesColorAndString(shiftX + shiftTimeX,shiftY+n, color, scoreBoard.PlayerTime(n)));
+            _consoleOutput.Print(_componentBox.CoordinatesColorAndString (shiftX + shiftMovesX,shiftY+n, color, scoreBoard.PlayerMoves(n)));
         }
     }
     
     public void ChangeTime(Player player )
     {
-        _consoleOutput.Print(_components.Strings["Time"].Set(player.TimeSpent()));
+        _consoleOutput.Print(_components.Strings["Time"].String(player.TimeSpent()));
     }
     
     public void ChangeMoves(GameBoard gameBoard)
     {
-        _consoleOutput.Print(_components.Strings["Moves"].Set(gameBoard.GetMoves()));
+        _consoleOutput.Print(_components.Strings["Moves"].String(gameBoard.GetMoves()));
     }
     
     public void ChangeName()
