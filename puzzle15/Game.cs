@@ -13,7 +13,7 @@ public class Game
         _gameBoard = new GameBoard();
         _scoreBoard = new ScoreBoard();
         _player = new Player();
-        _graphics = new Graphics(_player, _gameBoard ,_scoreBoard);
+        _graphics = new Graphics(_player, _gameBoard);
         Begin();
     }
 
@@ -21,13 +21,13 @@ public class Game
     {
         _player = new Player();
         _gameBoard = new GameBoard();
-        _graphics = new Graphics(_player, _gameBoard ,_scoreBoard);
+        _graphics = new Graphics(_player, _gameBoard);
     }
     void ChangeName()
     {
         _graphics.ChangeName();
         _player.ChangeName();
-        _graphics = new Graphics(_player, _gameBoard ,_scoreBoard);
+        _graphics = new Graphics(_player, _gameBoard);
     }
     
     private void Begin()

@@ -38,28 +38,24 @@ public class ComponentBox
         return this; 
     }
     
-    public ComponentBox CoordinatesColorAndString(int shiftX, int shiftY, ConsoleColor color, string str)
+    public void CoordinatesColorAndString(int shiftX, int shiftY, ConsoleColor color, string str)
     {
         CoordinatesColorAndString(shiftX, shiftY, color, new string[] { str });
-        return this;
     }
     
-    public ComponentBox CoordinatesColorAndString(int shiftX, int shiftY, ConsoleColor color, string[] str)
+    public void CoordinatesColorAndString(int shiftX, int shiftY, ConsoleColor color, string[] str)
     {
         CoordinatesAndColor(shiftX, shiftY, color);
         String(str);
-        return this; 
     }    
     
-    public ComponentBox String(string []str)
+    public void String(string []str)
     {
         Arr = str;
-        return this; 
     }
     
-    public ComponentBox String(string str)
+    public void String(string str)
     {
         String(new string[] { str });
-        return this; 
     }
 }

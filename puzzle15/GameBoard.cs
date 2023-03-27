@@ -64,7 +64,6 @@ public class GameBoard
     
     public void Move(string move, int repeat=1)
     {
-        bool correctmove = false;
         switch (move)
         {
             case "Right" when ZeroPosX < 3:
@@ -129,7 +128,7 @@ public class GameBoard
 
     public bool LastMove(int row, int column)
     {
-        if (Board[row, column] == Board[LastMoveY, LastMoveX] || Board[row, column] == Board[ZeroPosY, ZeroPosX] || Moves == 0) return true;
+        if (Board[row, column] == Board[LastMoveY, LastMoveX] || Board[row, column] == Board[ZeroPosY, ZeroPosX]) return true;
         else return false;
     }
 
@@ -148,7 +147,12 @@ public class GameBoard
             return false;
 
     }
-    
+
+    public int LastMove()
+    {
+        return Board[LastMoveY, LastMoveX];
+    }
+
     public bool CheckWin()
     {
         for (int i = 0; i < 4; i++)
