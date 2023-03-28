@@ -202,6 +202,8 @@ public class Components
         Strings.Add ("Win2", new ComponentBox(30,20, ConsoleColor.Red, "Press any key to start new game"));
         Strings.Add ("ScoreBoard", new ComponentBox(String.Empty));
         
+        
+        //Component ScoreBoard
         const int shiftY = 16;
         const int shiftX = 66;
         const int shiftTimeX = 16;

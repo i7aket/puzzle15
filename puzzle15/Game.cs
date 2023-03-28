@@ -40,16 +40,16 @@ public class Game
             e = Console.ReadKey();
             switch (e.Key)
             {
-                case ConsoleKey.RightArrow: _gameBoard.Move("Right");
+                case ConsoleKey.RightArrow: _gameBoard.Right();
                     break;
 
-                case ConsoleKey.DownArrow: _gameBoard.Move("Down");
+                case ConsoleKey.DownArrow: _gameBoard.Down();
                     break;
 
-                case ConsoleKey.LeftArrow: _gameBoard.Move("Left");
+                case ConsoleKey.LeftArrow: _gameBoard.Left();
                     break;
 
-                case ConsoleKey.UpArrow: _gameBoard.Move("Up");
+                case ConsoleKey.UpArrow: _gameBoard.Up();
                     break;
 
                 //New Game

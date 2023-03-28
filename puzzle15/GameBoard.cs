@@ -4,30 +4,30 @@ namespace Puzzle15;
 
 public class GameBoard
 {
-    private int ZeroPosX { get; set;}= 3;
-    private int ZeroPosY{ get; set;}= 3;
-    public int LastMoveX{ get; private set;}
-    public int LastMoveY{ get; private set;}
-    public int Moves { get; private set;}= 0;
+    private int ZeroPosX { get; set; } = 3;
+    private int ZeroPosY { get; set; } = 3;
+    public int LastMoveX { get; private set; }
+    public int LastMoveY { get; private set; }
+    public int Moves { get; private set; } = 0;
 
-    public int [,] Board  { get; private set;}=
+    public int[,] Board { get; private set; } =
     {
-        {1,2,3,4},
-        {5,6,7,8},
-        {9,10,11,12},
-        {13,14,15,0},
+        { 1, 2, 3, 4 },
+        { 5, 6, 7, 8 },
+        { 9, 10, 11, 12 },
+        { 13, 14, 15, 0 },
     };
 
-    private readonly int [,] _winBoard  =
+    private readonly int[,] _winBoard =
     {
-        {1,2,3,4},
-        {5,6,7,8},
-        {9,10,11,12},
-        {13,14,15,0},
+        { 1, 2, 3, 4 },
+        { 5, 6, 7, 8 },
+        { 9, 10, 11, 12 },
+        { 13, 14, 15, 0 },
     };
-    
-    
-    public GameBoard ()
+
+
+    public GameBoard()
     {
         Shuffle();
     }
@@ -38,84 +38,86 @@ public class GameBoard
         for (int i = 0; i < 20; i++)
         {
             int rnd = random.Next(1, 4);
-            Move("Up", rnd);
-            Move("Left",rnd);
-            Move("Down", rnd);
-            Move("Right",rnd);
+            Up (rnd);
+            Left(rnd);
+            Down(rnd);
+            Right(rnd);
         }
+
         Moves = 0;
     }
 
-    public void DefaultPosition() 
+    public void DefaultPosition()
     {
         ZeroPosX = 3;
         ZeroPosY = 3;
-        
-        
-        
+
+
+
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
                 Board[i, j] = _winBoard[i, j];
-            } 
+            }
+        }
+    }
+
+    public void Right(int repeat = 1)
+    {
+        if (ZeroPosX < 3)
+        {
+            SaveLastMove();
+            for (int i = 0; i < repeat; i++)
+            {
+                Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY, ZeroPosX + 1];
+                Board[ZeroPosY, ZeroPosX + 1] = 0;
+                ZeroPosX++;
+                Moves++;
+            }
+        }
+    }
+
+    public void Down(int repeat = 1)
+    {
+        if (ZeroPosY < 3)
+        {
+            SaveLastMove();
+            for (int i = 0; i < repeat; i++) 
+            {
+                Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY + 1, ZeroPosX];
+                Board[ZeroPosY + 1, ZeroPosX] = 0;
+                ZeroPosY++; 
+                Moves++;
+            }
+
+        }
+    }
+
+
+    public void Left(int repeat = 1) {
+        if (ZeroPosX > 0) {
+            SaveLastMove();
+            for (int i = 0; i < repeat; i++)
+            {
+                Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY, ZeroPosX - 1];
+                Board[ZeroPosY, ZeroPosX - 1] = 0;
+                ZeroPosX--;
+                Moves++;
+            }
         }
     }
     
-    public void Move(string move, int repeat=1)
-    {
-        switch (move)
+    public void Up(int repeat=1) {
+        if (ZeroPosY > 0)
         {
-            case "Right" when ZeroPosX < 3:
-
-                SaveLastMove();
-                
-                for (int i = 0; i < repeat; i++)
-                {
-                    Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY, ZeroPosX + 1];
-                    Board[ZeroPosY, ZeroPosX + 1] = 0;
-                    ZeroPosX++;
-                    Moves++;
-                }
-                break;
-
-            case "Down" when ZeroPosY < 3:
+            SaveLastMove();
+            for (int i = 0; i < repeat; i++)
             {
-                SaveLastMove(); 
-                for (int i = 0; i < repeat; i++)
-                {
-                    Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY + 1, ZeroPosX];
-                    Board[ZeroPosY + 1, ZeroPosX] = 0;
-                    ZeroPosY++;
-                    Moves++;
-                }
-                break;
-            }
-
-            case "Left" when ZeroPosX > 0:
-            {
-                SaveLastMove();
-                for (int i = 0; i < repeat; i++)
-                {
-                    Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY, ZeroPosX - 1];
-                    Board[ZeroPosY, ZeroPosX - 1] = 0;
-                    ZeroPosX--;
-                    Moves++;
-                }
-                break;
-            }
-
-            case "Up" when ZeroPosY > 0:
-            {
-                SaveLastMove();
-                for (int i = 0; i < repeat; i++)
-                {
-                    Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY - 1, ZeroPosX];
-                    Board[ZeroPosY - 1, ZeroPosX] = 0;
-                    ZeroPosY--;
-                    Moves++;
-                }
-                break;
+                Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY - 1, ZeroPosX];
+                Board[ZeroPosY - 1, ZeroPosX] = 0;
+                ZeroPosY--;
+                Moves++;
             }
         }
     }
