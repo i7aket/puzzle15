@@ -6,7 +6,7 @@ public class Game
     readonly ScoreBoard _scoreBoard;
     Player _player;
     Graphics _graphics;
-    private TimeSpentCount _timer;
+    private ChangeTimeSpent _timer;
 
     public Game()
     {
@@ -31,7 +31,7 @@ public class Game
 
     private void Begin()
     {
-        _timer = new TimeSpentCount(Callback);
+        _timer = new ChangeTimeSpent(Callback);
         
         ConsoleKeyInfo e;
         do

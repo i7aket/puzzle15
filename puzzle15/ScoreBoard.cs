@@ -15,7 +15,7 @@ public class ScoreBoard
             Player loadPlayer = new Player(line[0],       // Name
                 DateTime.Parse(line[1]),          //SyartTime
                 DateTime.Parse(line[2]),         //FinishTime
-                TimeSpan.Parse(line[3]),               //TimeSpentCount
+                TimeSpan.Parse(line[3]),               //ChangeTimeSpent
                 int.Parse(line[4]));                //moves
             _list.Add(loadPlayer);
         }
