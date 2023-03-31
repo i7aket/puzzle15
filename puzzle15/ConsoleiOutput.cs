@@ -1,6 +1,6 @@
 namespace Puzzle15;
 
-public class ConsoleOutput
+public class ConsoleiOutput : iOutput
 {
     private const int Height = 29;
     private const int Width = 95;
@@ -53,5 +53,9 @@ public class ConsoleOutput
         if (height < 0 || height > Height) throw new ArgumentException($"Height can not be less then 0 or greater than {Height}");
         if (width < 0 || width > Width) throw new ArgumentException($"Width can not be less then 0 or greater than {Height}");
     }
-    
+
+    public void Clear()
+    {
+        Console.Clear();
+    }
 }

@@ -1,16 +1,14 @@
 namespace Puzzle15;
 
-public class Components
+public class Components 
 {
     public readonly Dictionary<int, ComponentBox> Numbers = new Dictionary<int, ComponentBox>();
     public readonly Dictionary<string, ComponentBox> Strings = new Dictionary<string, ComponentBox>();
     public readonly List<ComponentBox> ScoreBoard = new List<ComponentBox>();
     private readonly ScoreBoard _scoreBoard = new ScoreBoard();
-    
+
     public Components()
     {
-
-
         string[] howToPlay = new [] {
             "   Use cursor control keys   ",
             " (the arrows) to move blocks ",
@@ -177,6 +175,7 @@ public class Components
             }
         };
         
+        // Components numbers
         for (int i = 0; i < numbers.GetLength(0); i++)
         {
             
@@ -188,6 +187,7 @@ public class Components
             Numbers.Add(i, new ComponentBox(arr));
         }
         
+        //components
         Strings.Add("NameMovesTimes", new ComponentBox(65, 1, ConsoleColor.Green, nameMovesTimes));
         Strings.Add("HowToPlay", new ComponentBox(65, 8, ConsoleColor.Green, howToPlay));
         Strings.Add("Name", new ComponentBox(73,1, ConsoleColor.Green, ""));
@@ -202,8 +202,7 @@ public class Components
         Strings.Add ("Win2", new ComponentBox(30,20, ConsoleColor.Red, "Press any key to start new game"));
         Strings.Add ("ScoreBoard", new ComponentBox(String.Empty));
         
-        
-        //Component ScoreBoard
+        //Components ScoreBoard
         const int shiftY = 16;
         const int shiftX = 66;
         const int shiftTimeX = 16;
@@ -212,7 +211,6 @@ public class Components
         int lines = _scoreBoard.CountPlayers() < 12 ? _scoreBoard.CountPlayers() : 12;
         for (int n = 0; n < lines; n++)
         {
-
             ConsoleColor color;
             if (n == 0)
             {
@@ -224,8 +222,7 @@ public class Components
             else
             {
                 color = ConsoleColor.Green;
-            } 
-            
+            }
             ScoreBoard.Add(new ComponentBox(shiftX, shiftY+n, color, _scoreBoard.PlayerName(n)));
             ScoreBoard.Add(new ComponentBox(shiftX + shiftTimeX,shiftY+n, color, _scoreBoard.PlayerTime(n)));
             ScoreBoard.Add(new ComponentBox(shiftX + shiftMovesX,shiftY+n, color, _scoreBoard.PlayerMoves(n)));

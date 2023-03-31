@@ -23,13 +23,7 @@ public class Game
         _gameBoard = new GameBoard();
         _graphics = new Graphics(_player, _gameBoard);
     }
-    void ChangeName()
-    {
-        _graphics.ChangeName();
-        _player.ChangeName();
-        _graphics = new Graphics(_player, _gameBoard);
-    }
-    
+
     private void Begin()
     {
         _timer = new Timer(e => { _graphics.ChangeTime(_player); }, null, 1000, 1000);
@@ -59,7 +53,9 @@ public class Game
 
                 case ConsoleKey.C:
                     _timer.Change(Timeout.Infinite,  Timeout.Infinite);
-                    ChangeName();
+                    _graphics.ChangeName();
+                    _player.ChangeName();
+                    _graphics = new Graphics(_player, _gameBoard);
                     _timer.Change(1000, 1000);
                     break;
 

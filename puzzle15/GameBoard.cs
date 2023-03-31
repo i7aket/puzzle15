@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace Puzzle15;
 
 public class GameBoard
@@ -9,26 +7,23 @@ public class GameBoard
     public int LastMoveX { get; private set; }
     public int LastMoveY { get; private set; }
     public int Moves { get; private set; } = 0;
+    public int[,] Board { get; private set; }
 
-    public int[,] Board { get; private set; } =
-    {
+    private readonly int[,] _winBoard = new int[,] {
         { 1, 2, 3, 4 },
         { 5, 6, 7, 8 },
         { 9, 10, 11, 12 },
         { 13, 14, 15, 0 },
     };
-
-    private readonly int[,] _winBoard =
-    {
-        { 1, 2, 3, 4 },
-        { 5, 6, 7, 8 },
-        { 9, 10, 11, 12 },
-        { 13, 14, 15, 0 },
-    };
-
-
+    
     public GameBoard()
     {
+        Board = new int[,] {
+            { 1, 2, 3, 4 },
+            { 5, 6, 7, 8 },
+            { 9, 10, 11, 12 },
+            { 13, 14, 15, 0 },
+        };
         Shuffle();
     }
 
@@ -43,7 +38,6 @@ public class GameBoard
             Down(rnd);
             Right(rnd);
         }
-
         Moves = 0;
     }
 
@@ -51,16 +45,13 @@ public class GameBoard
     {
         ZeroPosX = 3;
         ZeroPosY = 3;
-
-
-
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                Board[i, j] = _winBoard[i, j];
-            }
-        }
+        
+        Board = new[,] {
+            { 1, 2, 3, 4 },
+            { 5, 6, 7, 8 },
+            { 9, 10, 11, 12 },
+            { 13, 14, 15, 0 },
+        };
     }
 
     public void Right(int repeat = 1)
@@ -93,8 +84,7 @@ public class GameBoard
 
         }
     }
-
-
+    
     public void Left(int repeat = 1) {
         if (ZeroPosX > 0) {
             SaveLastMove();
@@ -108,7 +98,7 @@ public class GameBoard
         }
     }
     
-    public void Up(int repeat=1) {
+    public void Up(int repeat= 1) {
         if (ZeroPosY > 0)
         {
             SaveLastMove();
