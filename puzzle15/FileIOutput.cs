@@ -1,3 +1,5 @@
+using System.Xml;
+
 namespace Puzzle15;
 
 public class FileIOutput : IOutput
@@ -6,12 +8,13 @@ public class FileIOutput : IOutput
     private const int Height = 29;
     private const int Width = 95;
     private readonly char[,] _buffer = new char [Height,Width];
+    private const char L0Char = '*';
 
     
     public FileIOutput()
     {
-        using StreamWriter save = new StreamWriter("f.txt");
-        save.Write("");
+        using StreamWriter save = new StreamWriter("f.txt"); 
+        save.Write(string.Empty);
     }
     
     public void PrintLayer0()
@@ -22,8 +25,8 @@ public class FileIOutput : IOutput
             string line = String.Empty;
             for (var x = 0; x < Width; x++)
             {
-                _buffer[y, x] = '*';
-                line += "*";
+                _buffer[y, x] = L0Char;
+                line += L0Char.ToString();
             }
             save.WriteLine(line);
         }
@@ -73,7 +76,7 @@ public class FileIOutput : IOutput
         using StreamWriter save = new StreamWriter("f.txt");
         for (var y = 0; y < Height; y++)
         {
-            string line = String.Empty;
+            string line = string.Empty;
             for (var x = 0; x < Width; x++)
             {
                  line += _buffer[y, x].ToString();
@@ -85,7 +88,7 @@ public class FileIOutput : IOutput
     public void Clear()
     {
         using StreamWriter save = new StreamWriter("f.txt");
-        save.Write("");
+        save.Write(string.Empty);
     }
 }
 

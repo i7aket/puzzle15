@@ -4,12 +4,15 @@ public class GameBoard
 {
     private int _zeroPosX = 3;
     private int _zeroPosY= 3;
-    private int LastMoveX { get; set; }
-    private int LastMoveY { get; set; }
+    private const int RowSize = 3;
+    private const int Shuffles = 20; // How many times to shuffle board
+
+    private int _lastMoveX;
+    private int _lastMoveY;
     public int Moves { get; private set; }
     public int[,] Board { get; private set; }
 
-    private readonly int[,] _winBoard = new int[,] {
+    private readonly int[,] _winBoard = {
         { 1, 2, 3, 4 },
         { 5, 6, 7, 8 },
         { 9, 10, 11, 12 },
@@ -30,9 +33,9 @@ public class GameBoard
     private void Shuffle()
     {
         Random random = new Random();
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < Shuffles; i++) 
         {
-            int rnd = random.Next(1, 4);
+            int rnd = random.Next(1, RowSize+1);
             Up (rnd);
             Left(rnd);
             Down(rnd);
@@ -56,7 +59,7 @@ public class GameBoard
 
     public void Right(int repeat = 1)
     {
-        if (_zeroPosX < 3)
+        if (_zeroPosX < RowSize)
         {
             SaveLastMove();
             for (int i = 0; i < repeat; i++)
@@ -71,7 +74,7 @@ public class GameBoard
 
     public void Down(int repeat = 1)
     {
-        if (_zeroPosY < 3)
+        if (_zeroPosY < RowSize)
         {
             SaveLastMove();
             for (int i = 0; i < repeat; i++) 
@@ -114,19 +117,14 @@ public class GameBoard
 
     private void SaveLastMove()
     {
-        if (LastMoveX != _zeroPosX) LastMoveX = _zeroPosX;
-        if (LastMoveY != _zeroPosY) LastMoveY = _zeroPosY;
+        
+        if (_lastMoveX != _zeroPosX) _lastMoveX = _zeroPosX;
+        if (_lastMoveY != _zeroPosY) _lastMoveY = _zeroPosY;
     }
-
-    /*public int LastMove()
-    {
-        return Board[LastMoveY, LastMoveX];
-    }*/
-
-
+    
     public bool LastMove(int row, int column)
     {
-        if (Board[row, column] == Board[LastMoveY, LastMoveX] || Board[row, column] == Board[_zeroPosY, _zeroPosX]) return true;
+        if (Board[row, column] == Board[_lastMoveY, _lastMoveX] || Board[row, column] == Board[_zeroPosY, _zeroPosX]) return true;
         else return false;
     }
 
@@ -148,9 +146,9 @@ public class GameBoard
 
     public bool CheckWin()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i <= RowSize; i++)
         {
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j <= RowSize; j++)
             {
                 if (Board[i, j] != _winBoard[i, j])
                 {

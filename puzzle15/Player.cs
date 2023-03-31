@@ -6,7 +6,9 @@ public class Player
     public DateTime StartTime { get; private set;}
     public DateTime FinishTime { get; private set;}
     public TimeSpan Ts { get; private set;}
-    public string Name{ get; private set;} 
+    public string Name{ get; private set;}
+
+    private const int MaxNameLength = 16;
 
     public Player()
     {
@@ -15,7 +17,7 @@ public class Player
         Ts = DateTime.Now - StartTime;
         
         using StreamWriter save = new StreamWriter("n.txt", true);
-        save.Write("");
+        save.Write(string.Empty);
         
         LoadName();
     }
@@ -49,7 +51,7 @@ public class Player
     public void ChangeName()
     {
         string name = Console.ReadLine();
-        Name = name.Length < 16 ? name : "Too Long Name";
+        Name = name.Length < MaxNameLength ? name : "Too Long Name";
         SaveName();
     }
 

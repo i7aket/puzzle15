@@ -5,18 +5,18 @@ public class ScoreBoard
     public ScoreBoard ()
     {
         using StreamWriter save = new StreamWriter("s.txt", true);
-        save.Write("");
+        save.Write(string.Empty);
         
         string? s;
         using var load = new StreamReader("s.txt");
         while ((s = load.ReadLine()) != null)
         {
             string[] line = s.Split('§');
-            Player loadPlayer = new Player(line[0], 
-                DateTime.Parse(line[1]), 
-                DateTime.Parse(line[2]), 
-                TimeSpan.Parse(line[3]), 
-                int.Parse(line[4]));
+            Player loadPlayer = new Player(line[0],       // Name
+                DateTime.Parse(line[1]),          //SyartTime
+                DateTime.Parse(line[2]),         //FinishTime
+                TimeSpan.Parse(line[3]),               //TimeSpentCount
+                int.Parse(line[4]));                //moves
             _list.Add(loadPlayer);
         }
     }
