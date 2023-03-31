@@ -1,6 +1,6 @@
 namespace Puzzle15;
 
-public class FileiOutput : iOutput
+public class FileIOutput : IOutput
 
 {
     private const int Height = 29;
@@ -8,7 +8,7 @@ public class FileiOutput : iOutput
     private char[,] _buffer = new char [Height,Width];
 
     
-    public FileiOutput()
+    public FileIOutput()
     {
         using StreamWriter save = new StreamWriter("f.txt");
         save.Write("");
@@ -31,7 +31,7 @@ public class FileiOutput : iOutput
 
     public void PrintEmptyBox(int shiftX, int shiftY, int height, int width)
     {
-        CheckCoordinaits(shiftY, shiftX);
+        CheckCoordinates(shiftY, shiftX);
         if (height < 0) throw new ArgumentException($"Height of the Box can not be less than 0");
         if (width < 0) throw new ArgumentException($"Width of the Box can not be less than 0");
         if (shiftX + width > Width) throw new ArgumentException("Box width is out of view range");
@@ -49,7 +49,7 @@ public class FileiOutput : iOutput
 
     public void Print(ComponentBox componentBox)
     {
-        CheckCoordinaits(componentBox.ShiftY, componentBox.ShiftX);
+        CheckCoordinates(componentBox.ShiftY, componentBox.ShiftX);
         
         for (int line = 0; line < componentBox.Arr.Length; line++)
         {
@@ -62,13 +62,13 @@ public class FileiOutput : iOutput
         BufferWriteToFile();
     }
 
-    private void CheckCoordinaits(int height, int width)
+    private void CheckCoordinates(int height, int width)
     {
         if (height < 0 || height > Height) throw new ArgumentException($"Height can not be less then 0 or greater than {Height}");
         if (width < 0 || width > Width) throw new ArgumentException($"Width can not be less then 0 or greater than {Height}");
     }
 
-    public void BufferWriteToFile()
+    private void BufferWriteToFile()
     {
         using StreamWriter save = new StreamWriter("f.txt");
         for (var y = 0; y < Height; y++)

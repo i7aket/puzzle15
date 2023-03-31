@@ -1,6 +1,6 @@
 namespace Puzzle15;
 
-public class ConsoleiOutput : iOutput
+public class ConsoleIOutput : IOutput
 {
     private const int Height = 29;
     private const int Width = 95;
@@ -21,7 +21,7 @@ public class ConsoleiOutput : iOutput
 
     public void PrintEmptyBox(int shiftX, int shiftY, int height, int width)
     {
-        CheckCoordinaits(shiftY, shiftX);
+        CheckCoordinates(shiftY, shiftX);
         if (height < 0) throw new ArgumentException($"Height of the Box can not be less than 0");
         if (width < 0) throw new ArgumentException($"Width of the Box can not be less than 0");
         if (shiftX + width > Width) throw new ArgumentException("Box width is out of view range");
@@ -39,7 +39,7 @@ public class ConsoleiOutput : iOutput
 
     public void Print(ComponentBox componentBox)
     {
-        CheckCoordinaits(componentBox.ShiftY, componentBox.ShiftX);
+        CheckCoordinates(componentBox.ShiftY, componentBox.ShiftX);
         for (int line = 0; line < componentBox.Arr.Length; line++)
         {
             Console.ForegroundColor = componentBox.Color;
@@ -48,7 +48,7 @@ public class ConsoleiOutput : iOutput
         }
     }
 
-    private void CheckCoordinaits(int height, int width)
+    private void CheckCoordinates(int height, int width)
     {
         if (height < 0 || height > Height) throw new ArgumentException($"Height can not be less then 0 or greater than {Height}");
         if (width < 0 || width > Width) throw new ArgumentException($"Width can not be less then 0 or greater than {Height}");

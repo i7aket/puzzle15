@@ -1,6 +1,6 @@
 namespace Puzzle15;
 
-interface iOutput
+interface IOutput
 {
     void PrintLayer0();
     void PrintEmptyBox(int shiftX, int shiftY, int height, int width);

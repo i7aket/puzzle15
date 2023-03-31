@@ -6,7 +6,7 @@ public class GameBoard
     private int ZeroPosY { get; set; } = 3;
     public int LastMoveX { get; private set; }
     public int LastMoveY { get; private set; }
-    public int Moves { get; private set; } = 0;
+    public int Moves { get; private set; }
     public int[,] Board { get; private set; }
 
     private readonly int[,] _winBoard = new int[,] {
@@ -18,7 +18,7 @@ public class GameBoard
     
     public GameBoard()
     {
-        Board = new int[,] {
+        Board = new[,] {
             { 1, 2, 3, 4 },
             { 5, 6, 7, 8 },
             { 9, 10, 11, 12 },
