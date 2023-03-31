@@ -22,10 +22,10 @@ public class ConsoleIOutput : IOutput
     public void PrintEmptyBox(int shiftX, int shiftY, int height, int width)
     {
         CheckCoordinates(shiftY, shiftX);
-        if (height < 0) throw new ArgumentException($"Height of the Box can not be less than 0");
-        if (width < 0) throw new ArgumentException($"Width of the Box can not be less than 0");
-        if (shiftX + width > Width) throw new ArgumentException("Box width is out of view range");
-        if (shiftY + height > Height) throw new ArgumentException("Box height is out of view range");
+        if (height < 0) throw new ArgumentException($"height of the Box can not be less than 0");
+        if (width < 0) throw new ArgumentException($"width of the Box can not be less than 0");
+        if (shiftX + width > ConsoleIOutput.Width) throw new ArgumentException("Box width is out of view range");
+        if (shiftY + height > ConsoleIOutput.Height) throw new ArgumentException("Box height is out of view range");
         for (var y = 0; y < height; y++)
         {
             for (var x = 0; x < width; x++)
@@ -50,8 +50,8 @@ public class ConsoleIOutput : IOutput
 
     private void CheckCoordinates(int height, int width)
     {
-        if (height < 0 || height > Height) throw new ArgumentException($"Height can not be less then 0 or greater than {Height}");
-        if (width < 0 || width > Width) throw new ArgumentException($"Width can not be less then 0 or greater than {Height}");
+        if (height < 0 || height > ConsoleIOutput.Height) throw new ArgumentException($"height can not be less then 0 or greater than {ConsoleIOutput.Height}");
+        if (width < 0 || width > ConsoleIOutput.Width) throw new ArgumentException($"width can not be less then 0 or greater than {ConsoleIOutput.Height}");
     }
 
     public void Clear()

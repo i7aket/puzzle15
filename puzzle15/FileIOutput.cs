@@ -5,7 +5,7 @@ public class FileIOutput : IOutput
 {
     private const int Height = 29;
     private const int Width = 95;
-    private char[,] _buffer = new char [Height,Width];
+    private readonly char[,] _buffer = new char [Height,Width];
 
     
     public FileIOutput()

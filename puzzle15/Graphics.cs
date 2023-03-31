@@ -3,8 +3,8 @@ namespace Puzzle15;
 public class Graphics
 {
     
-    private IOutput _writer;
-    private Components _components = new Components();
+    private readonly IOutput _writer;
+    private readonly Components _components = new Components();
     
     public Graphics (Player player, GameBoard gameBoard)
     {

@@ -2,10 +2,10 @@ namespace Puzzle15;
 
 public class GameBoard
 {
-    private int ZeroPosX { get; set; } = 3;
-    private int ZeroPosY { get; set; } = 3;
-    public int LastMoveX { get; private set; }
-    public int LastMoveY { get; private set; }
+    private int _zeroPosX = 3;
+    private int _zeroPosY= 3;
+    private int LastMoveX { get; set; }
+    private int LastMoveY { get; set; }
     public int Moves { get; private set; }
     public int[,] Board { get; private set; }
 
@@ -43,8 +43,8 @@ public class GameBoard
 
     public void DefaultPosition()
     {
-        ZeroPosX = 3;
-        ZeroPosY = 3;
+        _zeroPosX = 3;
+        _zeroPosY = 3;
         
         Board = new[,] {
             { 1, 2, 3, 4 },
@@ -56,14 +56,14 @@ public class GameBoard
 
     public void Right(int repeat = 1)
     {
-        if (ZeroPosX < 3)
+        if (_zeroPosX < 3)
         {
             SaveLastMove();
             for (int i = 0; i < repeat; i++)
             {
-                Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY, ZeroPosX + 1];
-                Board[ZeroPosY, ZeroPosX + 1] = 0;
-                ZeroPosX++;
+                Board[_zeroPosY, _zeroPosX] = Board[_zeroPosY, _zeroPosX + 1];
+                Board[_zeroPosY, _zeroPosX + 1] = 0;
+                _zeroPosX++;
                 Moves++;
             }
         }
@@ -71,14 +71,14 @@ public class GameBoard
 
     public void Down(int repeat = 1)
     {
-        if (ZeroPosY < 3)
+        if (_zeroPosY < 3)
         {
             SaveLastMove();
             for (int i = 0; i < repeat; i++) 
             {
-                Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY + 1, ZeroPosX];
-                Board[ZeroPosY + 1, ZeroPosX] = 0;
-                ZeroPosY++; 
+                Board[_zeroPosY, _zeroPosX] = Board[_zeroPosY + 1, _zeroPosX];
+                Board[_zeroPosY + 1, _zeroPosX] = 0;
+                _zeroPosY++; 
                 Moves++;
             }
 
@@ -86,27 +86,27 @@ public class GameBoard
     }
     
     public void Left(int repeat = 1) {
-        if (ZeroPosX > 0) {
+        if (_zeroPosX > 0) {
             SaveLastMove();
             for (int i = 0; i < repeat; i++)
             {
-                Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY, ZeroPosX - 1];
-                Board[ZeroPosY, ZeroPosX - 1] = 0;
-                ZeroPosX--;
+                Board[_zeroPosY, _zeroPosX] = Board[_zeroPosY, _zeroPosX - 1];
+                Board[_zeroPosY, _zeroPosX - 1] = 0;
+                _zeroPosX--;
                 Moves++;
             }
         }
     }
     
     public void Up(int repeat= 1) {
-        if (ZeroPosY > 0)
+        if (_zeroPosY > 0)
         {
             SaveLastMove();
             for (int i = 0; i < repeat; i++)
             {
-                Board[ZeroPosY, ZeroPosX] = Board[ZeroPosY - 1, ZeroPosX];
-                Board[ZeroPosY - 1, ZeroPosX] = 0;
-                ZeroPosY--;
+                Board[_zeroPosY, _zeroPosX] = Board[_zeroPosY - 1, _zeroPosX];
+                Board[_zeroPosY - 1, _zeroPosX] = 0;
+                _zeroPosY--;
                 Moves++;
             }
         }
@@ -114,8 +114,8 @@ public class GameBoard
 
     private void SaveLastMove()
     {
-        if (LastMoveX != ZeroPosX) LastMoveX = ZeroPosX;
-        if (LastMoveY != ZeroPosY) LastMoveY = ZeroPosY;
+        if (LastMoveX != _zeroPosX) LastMoveX = _zeroPosX;
+        if (LastMoveY != _zeroPosY) LastMoveY = _zeroPosY;
     }
 
     /*public int LastMove()
@@ -126,7 +126,7 @@ public class GameBoard
 
     public bool LastMove(int row, int column)
     {
-        if (Board[row, column] == Board[LastMoveY, LastMoveX] || Board[row, column] == Board[ZeroPosY, ZeroPosX]) return true;
+        if (Board[row, column] == Board[LastMoveY, LastMoveX] || Board[row, column] == Board[_zeroPosY, _zeroPosX]) return true;
         else return false;
     }
 

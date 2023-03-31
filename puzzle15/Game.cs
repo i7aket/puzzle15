@@ -3,7 +3,7 @@ namespace Puzzle15;
 public class Game
 {
     GameBoard _gameBoard;
-    ScoreBoard _scoreBoard;
+    readonly ScoreBoard _scoreBoard;
     Player _player;
     Graphics _graphics;
     private Timer _timer;

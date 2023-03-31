@@ -20,8 +20,8 @@ public class ScoreBoard
             _list.Add(loadPlayer);
         }
     }
-    
-    List<Player> _list = new List<Player>();
+
+    readonly List<Player> _list = new List<Player>();
 
     public void SaveList()
     {
