@@ -2,37 +2,32 @@ namespace Puzzle15;
 
 public class ScoreBoard
 {
+    private List<Player>? _list;
+
+    private readonly JsonSaveLoad<List<Player>?> _saveLoadLoadProvider = new JsonSaveLoad<List<Player>?>( "save.json");
+    //public XmlSave<List<Player>?> SaveLoadProvider = new XmlSave<List<Player>?>( "save.xml");
+    
     public ScoreBoard ()
     {
-        using StreamWriter save = new StreamWriter("s.txt", true);
-        save.Write(string.Empty);
-        
-        string? s;
-        using var load = new StreamReader("s.txt");
-        while ((s = load.ReadLine()) != null)
+        if (_saveLoadLoadProvider.Load() != null)
         {
-            string[] line = s.Split('§');
-            Player loadPlayer = new Player(line[0],       // Name
-                DateTime.Parse(line[1]),          //SyartTime
-                DateTime.Parse(line[2]),         //FinishTime
-                TimeSpan.Parse(line[3]),               //ChangeTimeSpent
-                int.Parse(line[4]));                //moves
-            _list.Add(loadPlayer);
+            _list = _saveLoadLoadProvider.Load();
+        }
+        else
+        {
+            _list = new List<Player>();
         }
     }
 
-    readonly List<Player> _list = new List<Player>();
-
     public void SaveList()
     {
-        using StreamWriter save = new StreamWriter("s.txt");
-        foreach (var el in _list)
-            save.WriteLine($"{el.Name}§{el.StartTime}§{el.FinishTime}§{el.Ts}§{el.Moves}");
+        _saveLoadLoadProvider.Save(_list);
     }
-    
+
     public int CountPlayers()
     {
-        return _list.Count;
+        if (_list != null) return _list.Count;
+        else return 0;
     }
 
     public string PlayerName(int n)

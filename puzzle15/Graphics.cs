@@ -31,7 +31,7 @@ public class Graphics
         _components.Strings["Moves"].String(gameBoard.GetMoves());
         _writer.Print(_components.Strings["Moves"]);
         _components.Strings["Time"].String(player.TimeSpent());
-        _writer.Print(_components.Strings["Time"]); 
+        _writer.Print(_components.Strings["Time"]);
         _writer.Print(_components.Strings["HowToPlay"]);
         _writer.Print(_components.Strings["esc"]);
         _writer.Print(_components.Strings["N"]);

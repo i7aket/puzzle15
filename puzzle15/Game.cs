@@ -3,24 +3,26 @@ namespace Puzzle15;
 public class Game
 {
     GameBoard _gameBoard;
-    readonly ScoreBoard _scoreBoard;
     Player _player;
+    ScoreBoard _scoreBoard;
     Graphics _graphics;
     private ChangeTimeSpent _timer;
 
     public Game()
     {
         _gameBoard = new GameBoard();
-        _scoreBoard = new ScoreBoard();
         _player = new Player();
+        _scoreBoard = new ScoreBoard();
         _graphics = new Graphics(_player, _gameBoard);
         Begin();
     }
 
     void NewGame()
     {
+        
         _player = new Player();
         _gameBoard = new GameBoard();
+        //_scoreBoard = new ScoreBoard();
         _graphics = new Graphics(_player, _gameBoard);
     }
     
