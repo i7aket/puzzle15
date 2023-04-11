@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace puzzle15;
 public class Component
 {
@@ -7,171 +9,26 @@ public class Component
         new Dictionary<int, List<ComponentBox>>();
     private readonly Dictionary<int, CoordinateBox> _numberCoordinates =
         new Dictionary<int, CoordinateBox>();
-    private readonly Dictionary<int, string []> _numberComponents =
-        new Dictionary<int, string []>();
-    
+
     public Component()
     {
-        int counter = 0;
-        int shiftY = 1;
-        
-        for (int row = 0; row < 4; row++)
+        int counter = 0; 
+        int paddingTop = 1;
+
+        for (int row = 0; row < Const.RowSize + 1; row++)
         {
-            int shiftX = 1;
-            for (int column = 0; column < 4; column++)
+            var paddingLeft = 1; 
+            for (int column = 0; column < Const.ColumnSize + 1; column++)
             {
-                _numberCoordinates[counter] = new CoordinateBox(shiftY, shiftX);
+                _numberCoordinates[counter] = new CoordinateBox(paddingTop, paddingLeft);
                 counter++;
-                shiftX += 16;
+                paddingLeft += _numbers[0,0].Length*2+1 ;   // multiply by 2 because we have 2 digits in number component.
             }
-            shiftY += 7;
+
+            paddingTop += _numbers.GetUpperBound(1) + 1 + 1; //+ height of the Element + padding 
         }
-        
-        string[,] numbers = new [,] {
-            {
-                "               ",
-                "               ",
-                "               ",
-                "               ",
-                "               ",
-                "               "
-            },
-            {
-                "      ██╗      ",
-                "     ███║      ",
-                "     ╚██║      ",
-                "      ██║      ",
-                "      ██║      ",
-                "      ╚═╝      "
-            },
-            {
-                "   ██████╗     ",
-                "   ╚════██╗    ",
-                "    █████╔╝    ",
-                "   ██╔═══╝     ",
-                "   ███████╗    ",
-                "   ╚══════╝    "
-            },
-            {
-                "   ██████╗     ",
-                "   ╚════██╗    ",
-                "    █████╔╝    ",
-                "    ╚═══██╗    ",
-                "   ██████╔╝    ",
-                "   ╚═════╝     "
-            },
-            {
-                "   ██╗  ██╗    ",
-                "   ██║  ██║    ",
-                "   ███████║    ",
-                "   ╚════██║    ",
-                "        ██║    ",
-                "        ╚═╝    "
-            },
-            {
-                "   ███████╗    ",
-                "   ██╔════╝    ",
-                "   ███████╗    ",
-                "   ╚════██║    ",
-                "   ███████║    ",
-                "   ╚══════╝    ",     
-            },
-            {
-                "    ██████╗    ",
-                "   ██╔════╝    ",
-                "   ███████╗    ",
-                "   ██╔═══██╗   ",
-                "   ╚██████╔╝   ",
-                "    ╚═════╝    "
-            },
-            {
-                "   ███████╗    ",
-                "   ╚════██║    ",
-                "       ██╔╝    ",
-                "      ██╔╝     ",  
-                "      ██║      ",
-                "      ╚═╝      "       
-            },
-            {
-                "    █████╗     ",
-                "   ██╔══██╗    ",
-                "   ╚█████╔╝    ",
-                "   ██╔══██╗    ",
-                "   ╚█████╔╝    ",
-                "    ╚════╝     ",      
-            },
-            {
-                "    █████╗     ",
-                "   ██╔══██╗    ",
-                "   ╚██████║    ",
-                "    ╚═══██║    ",
-                "    █████╔╝    ",
-                "    ╚════╝     "
-            },
-            {
-                "  ██╗ ██████╗  ",
-                " ███║██╔═████╗ ",
-                " ╚██║██║██╔██║ ",
-                "  ██║████╔╝██║ ",
-                "  ██║╚██████╔╝ ",
-                "  ╚═╝ ╚═════╝  ",
-            },
-            {
-                "     ██╗ ██╗   ",
-                "    ███║███║   ",
-                "    ╚██║╚██║   ",
-                "     ██║ ██║   ",
-                "     ██║ ██║   ",
-                "     ╚═╝ ╚═╝   "    
-            },
-            {
-                "  ██╗██████╗   ",
-                " ███║╚════██╗  ",
-                " ╚██║ █████╔╝  ",
-                "  ██║██╔═══╝   ",
-                "  ██║███████╗  ",
-                "  ╚═╝╚══════╝  "   
-            },
-            {
-                "  ██╗██████╗   ",
-                " ███║╚════██╗  ",
-                " ╚██║ █████╔╝  ",
-                "  ██║ ╚═══██╗  ",
-                "  ██║██████╔╝  ",
-                "  ╚═╝╚═════╝   "  
-            },
-            {
-                "  ██╗██╗  ██╗  ",
-                " ███║██║  ██║  ",
-                " ╚██║███████║  ",
-                "  ██║╚════██║  ",
-                "  ██║     ██║  ",
-                "  ╚═╝     ╚═╝  "
-            },
-            {
-                "  ██╗███████╗  ",
-                " ███║██╔════╝  ",
-                " ╚██║███████╗  ",
-                "  ██║╚════██║  ",
-                "  ██║███████║  ",
-                "  ╚═╝╚══════╝  " 
-            }
-        };
 
-        //  numbers
 
-        for (int i = 0; i < numbers.GetLength(0); i++)
-        {
-            
-            string [] arr = new string [numbers.GetLength(1)];    
-
-            for (int n = 0; n < numbers.GetLength(1); n++)
-                arr [n] = numbers[i,n];
-
-            _numberComponents.Add(i, arr);
-        }
-        
-        
         string[] howToPlay = new [] {
             "   Use cursor control keys   ",
             " (the arrows) to move blocks ",
@@ -197,22 +54,22 @@ public class Component
         
         List<ComponentBox> howToPlayTable = new List<ComponentBox>();
         
-        howToPlayTable.Add(new ComponentBox(65, 8, Color.Black, CreateCharBox(6, 29)));
-        howToPlayTable.Add(new ComponentBox(65, 8, Color.Green, howToPlay));
-        howToPlayTable.Add (new ComponentBox(74,11, Color.Red, "esc"));
-        howToPlayTable.Add (new ComponentBox(75,12, Color.Red, "N"));
-        howToPlayTable.Add (new ComponentBox(74,13, Color.Red, "C"));
+        howToPlayTable.Add(new ComponentBox(77, 8, Color.Black, CreateCharBox(6, 29)));
+        howToPlayTable.Add(new ComponentBox(77, 8, Color.Green, howToPlay));
+        howToPlayTable.Add (new ComponentBox(86,11, Color.Red, "esc"));
+        howToPlayTable.Add (new ComponentBox(87,12, Color.Red, "N"));
+        howToPlayTable.Add (new ComponentBox(86,13, Color.Red, "C"));
         _interfaceComponents[Const.HowToPlayTable] = howToPlayTable;
         
         
         List<ComponentBox> nameMovesTimesTable = new List<ComponentBox>();
-        nameMovesTimesTable.Add(new ComponentBox(65, 1, Color.Black, CreateCharBox(6, 29)));
-        nameMovesTimesTable.Add(new ComponentBox(65, 1, Color.Green, nameMovesTimes));
+        nameMovesTimesTable.Add(new ComponentBox(77, 1, Color.Black, CreateCharBox(6, 29)));
+        nameMovesTimesTable.Add(new ComponentBox(77, 1, Color.Green, nameMovesTimes));
         _interfaceComponents[Const.NameMovesTimeTable] = nameMovesTimesTable;
         
         List<ComponentBox> scoreboardTable = new List<ComponentBox>();
-        nameMovesTimesTable.Add(new ComponentBox(65, 15, Color.Black, CreateCharBox(13, 29)));
-        scoreboardTable.Add (new ComponentBox(66,15, Color.Green, "Name            Time  Moves"));
+        nameMovesTimesTable.Add(new ComponentBox(77, 15, Color.Black, CreateCharBox(13, 29)));
+        scoreboardTable.Add (new ComponentBox(78,15, Color.Green, "Name            Time  Moves"));
         _interfaceComponents[Const.ScoreboardTable] = scoreboardTable;
 
         string[] win = new [] {
@@ -238,7 +95,7 @@ public class Component
         
         
         List<ComponentBox> winMessageComponentBoxes = new List<ComponentBox>();
-        winMessageComponentBoxes.Add(new ComponentBox(15, 4, Color.Red, win));
+        winMessageComponentBoxes.Add(new ComponentBox(27, 4, Color.Red, win));
         _interfaceComponents[Const.WinMessage] = winMessageComponentBoxes;
         
         List<ComponentBox> nameComponentBoxes = new List<ComponentBox>();
@@ -257,12 +114,151 @@ public class Component
         _interfaceComponents[Const.Time] = timeComponentBoxes;
         
         List<ComponentBox> typeYourNameComponentBoxes = new List<ComponentBox>();
-        typeYourNameComponentBoxes.Add(new ComponentBox(73, 1, Color.Green, CreateCharBox(1, 21)));
-        typeYourNameComponentBoxes.Add(new ComponentBox(73,1, Color.Green, "Type your Name"));
+        typeYourNameComponentBoxes.Add(new ComponentBox(85, 1, Color.Green, CreateCharBox(1, 21)));
+        typeYourNameComponentBoxes.Add(new ComponentBox(85,1, Color.Green, "Type your Name"));
         _interfaceComponents[Const.TypeYourNameMessage] = typeYourNameComponentBoxes;
     }
+
+    string[,] _numbers = new[,]
+    {
+        {
+            " ██████╗ ",
+            "██╔═████╗",
+            "██║██╔██║",
+            "████╔╝██║",
+            "╚██████╔╝",
+            " ╚═════╝ ",
+        },
+        {
+            " ██╗     ",
+            "███║     ",
+            "╚██║     ",
+            " ██║     ",
+            " ██║     ",
+            " ╚═╝     "
+        },
+        {
+            "██████╗  ",
+            "╚════██╗ ",
+            " █████╔╝ ",
+            "██╔═══╝  ",
+            "███████╗ ",
+            "╚══════╝ "
+        },
+        {
+            "██████╗  ",
+            "╚════██╗ ",
+            " █████╔╝ ",
+            " ╚═══██╗ ",
+            "██████╔╝ ",
+            "╚═════╝  "
+        },
+        {
+            "██╗  ██╗ ",
+            "██║  ██║ ",
+            "███████║ ",
+            "╚════██║ ",
+            "     ██║ ",
+            "     ╚═╝ "
+        },
+        {
+            "███████╗ ",
+            "██╔════╝ ",
+            "███████╗ ",
+            "╚════██║ ",
+            "███████║ ",
+            "╚══════╝ ",
+        },
+        {
+            " ██████╗ ",
+            "██╔════╝ ",
+            "███████╗ ",
+            "██╔═══██╗",
+            "╚██████╔╝",
+            " ╚═════╝ "
+        },
+        {
+            "███████╗ ",
+            "╚════██║ ",
+            "    ██╔╝ ",
+            "   ██╔╝  ",
+            "   ██║   ",
+            "   ╚═╝   "
+        },
+        {
+            " █████╗  ",
+            "██╔══██╗ ",
+            "╚█████╔╝ ",
+            "██╔══██╗ ",
+            "╚█████╔╝ ",
+            " ╚════╝  "
+        },
+        {
+            " █████╗  ",
+            "██╔══██╗ ",
+            "╚██████║ ",
+            " ╚═══██║ ",
+            " █████╔╝ ",
+            " ╚════╝  "
+        },
+        {
+            "         ",
+            "         ",
+            "         ",
+            "         ",
+            "         ",
+            "         "
+        },
+        {
+            "      ██╗",
+            "     ███║",
+            "     ╚██║",
+            "      ██║",
+            "      ██║",
+            "      ╚═╝"
+        },
+        
+    };
+
+    private string[] CreateNumber(int number)
+    {
+        string[] arr = new string[_numbers.GetUpperBound(1) + 1];
+        
+        // int digit1 = (number / 10 == 0) ? 10 : (number / 10 == 1) ? 11 : number / 10; 
+        // int digit2 = (digit1 == 10 && number % 10 == 0) ? 10 : number % 10;
+        
+        
+        const int empty = 10;
+        const int oneInTwoDigitNumber = 11;
+
+        int digit1 = number / 10;
+        int digit2 = number % 10;
     
-    public string[] CreateCharBox(int height, int width, char @char=' ')
+        if (digit1 == 0)
+        {
+            digit1 = empty;
+        }
+        else if (digit1 == 1)
+        {
+            digit1 = oneInTwoDigitNumber;
+        }
+    
+        if (digit1 == empty && digit2 == 0)
+        {
+            digit2 = empty;
+        }
+
+        for (int i = 0; i <= _numbers.GetUpperBound(1); i++)
+        {
+            arr[i] = string.Concat(_numbers[digit1, i], _numbers[digit2, i]);
+        }
+
+        return arr; 
+    }
+
+
+    
+    private string[] CreateCharBox(int height, int width, char @char=' ')
     {
         if (height < 0) throw new ArgumentException($"height of the Box can not be less than 0");
         if (width < 0) throw new ArgumentException($"width of the Box can not be less than 0");
@@ -280,6 +276,7 @@ public class Component
         }
         return box;
     }
+    
     
     public void ShowInterfaceGraphic()
     {
@@ -357,12 +354,12 @@ public class Component
     {
         if (numbersIndexBox.PrintNumbers == PrintNumbers.AllNumbers)
         {
-            for (int index = 0; index < 16; index++)
+            for (int index = 0; index < numbersIndexBox.Numbers.Count(); index++)
             {
-                Color color = (numbersIndexBox.Numbers.Skip(index).First() == index+1) ? Color.Green : Color.Yellow;
+                Color color = (numbersIndexBox.Numbers.Skip(index).First() == index + 1) ? Color.Green : Color.Yellow;
                 int top = _numberCoordinates[index].Top;
                 int left = _numberCoordinates[index].Left;
-                string[] arr = _numberComponents[numbersIndexBox.Numbers.Skip(index).First()];
+                string[] arr = CreateNumber(numbersIndexBox.Numbers.Skip(index).First());
                 PrintEvent(new ComponentBox(left, top, color, arr));
             }    
         }
@@ -373,7 +370,7 @@ public class Component
                 Color color = (numbersIndexBox.Numbers.Skip(index).First() == index + 1) ? Color.Green : Color.Yellow;
                 int top = _numberCoordinates[index].Top;
                 int left = _numberCoordinates[index].Left;
-                string[] arr = _numberComponents[numbersIndexBox.Numbers.Skip(index).First()];
+                string[] arr = CreateNumber(numbersIndexBox.Numbers.Skip(index).First());
                 PrintEvent(new ComponentBox(left, top, color, arr));
             }
         }
@@ -383,10 +380,10 @@ public class Component
     public void ShowScoreboard(List<PlayerSaveLoadBox> scoreboard)
     {
         //Components ScoreBoard
-        const int shiftY = 16;
-        const int shiftX = 66;
-        const int shiftTimeX = 16;
-        const int shiftMovesX = 22;
+        const int shiftTop = 16;
+        const int shiftLeft = 78;
+        const int shiftLeftTime = 16;
+        const int shiftLeftMoves = 22;
         
         for (int n = 0; n < scoreboard.Count; n++)
         {
@@ -402,9 +399,9 @@ public class Component
             {
                 color = Color.Green;
             }
-            PrintEvent(new ComponentBox(shiftX, shiftY+n, color, scoreboard[n].Name));
-            PrintEvent(new ComponentBox(shiftX + shiftTimeX,shiftY+n, color, scoreboard[n].Ts.ToString(@"mm\:ss")));
-            PrintEvent(new ComponentBox(shiftX + shiftMovesX,shiftY+n, color, scoreboard[n].Moves.ToString()));
+            PrintEvent(new ComponentBox(shiftLeft, shiftTop+n, color, scoreboard[n].Name));
+            PrintEvent(new ComponentBox(shiftLeft + shiftLeftTime,shiftTop+n, color, scoreboard[n].Ts.ToString(@"mm\:ss")));
+            PrintEvent(new ComponentBox(shiftLeft + shiftLeftMoves,shiftTop+n, color, scoreboard[n].Moves.ToString()));
         }
     }
 }

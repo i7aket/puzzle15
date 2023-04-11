@@ -2,7 +2,7 @@ namespace puzzle15;
 public class Const
 {
     public const int CanvasHeight = 29;
-    public const int CanvasWidth = 95;
+    public const int CanvasWidth = 107;
         
     public const int RowSize = 3;
     public const int ColumnSize = RowSize;
@@ -16,6 +16,7 @@ public class Const
     public const int ScoreboardTable = 26;
     public const int WinMessage = 27;
     public const int TypeYourNameMessage = 28;
+    
     public const int MaxNameLength = 16;
         
     public const int NameComponent = 1;
@@ -23,13 +24,15 @@ public class Const
     public const int TimeComponent = 1;
         
     public const int NamePosTop = 1;
-    public const int NamePosLeft = 73;
+    public const int NamePosLeft = 85;
         
     public const int MovesPosTop = 3;
-    public const int MovesPosLeft = 73;
+    public const int MovesPosLeft = 85;
         
     public const int TimePosTop = 5;
-    public const int TimePosLeft = 73;
-    public const string SaveloadScoreboardPath = "scoreboard.json";
+    public const int TimePosLeft = 85;
+    public const int RightInterfaceShiftLeft = 85;
+    
+    public const string SaveLoadScoreboardPath = "scoreboard.json";
     public const string SaveLoadNamePath = "namesave.json";
 }

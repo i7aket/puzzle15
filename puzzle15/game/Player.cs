@@ -31,20 +31,20 @@ public class Player
     {
         _finishTime = DateTime.Now;
         _ts = DateTime.Now - _startTime;
-        var playerSaveLoadBox = new PlayerSaveLoadBox(_name, _ts, _finishTime, _startTime, _moves);
+        var playerSaveLoadBox = new PlayerSaveLoadBox(_name, _ts, _startTime, _finishTime, _moves);
         _scoreboard.Add(playerSaveLoadBox);
         _scoreboard =    _scoreboard.OrderBy (saveLoadBox => saveLoadBox.Ts)
                                     .ThenBy (saveLoadBox => saveLoadBox.Moves)
                                     .Take (12)
                                     .ToList ();
-        SaveScoreboardEvent(_scoreboard, Const.SaveloadScoreboardPath);
+        SaveScoreboardEvent(_scoreboard, Const.SaveLoadScoreboardPath);
     }
     
     public void LoadScoreboard ()
     {
         try
         {
-            _scoreboard = LoadScoreboardEvent(Const.SaveloadScoreboardPath);
+            _scoreboard = LoadScoreboardEvent(Const.SaveLoadScoreboardPath);
             ShowScoreboardEvent(_scoreboard);
         }
         catch (FileNotFoundException)

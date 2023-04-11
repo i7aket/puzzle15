@@ -9,7 +9,7 @@ public class PlayerSaveLoadBox
     public string Name{ get; private set; }
     
     
-    public PlayerSaveLoadBox(string name, TimeSpan ts, DateTime finishTime, DateTime startTime, int moves) 
+    public PlayerSaveLoadBox(string name, TimeSpan ts, DateTime startTime, DateTime finishTime, int moves) 
     {
         Name = name;
         Ts = ts;

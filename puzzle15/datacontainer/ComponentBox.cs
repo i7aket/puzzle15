@@ -2,19 +2,19 @@ namespace puzzle15;
 
 public class ComponentBox
 {
-    public int ShiftX { get; private set;}
-    public int ShiftY { get; private set;}
+    public int ShiftLeft { get; private set;}
+    public int ShiftTop { get; private set;}
     public Color Color{ get; private set;}  
     public string[] Arr{ get; private set;}
     
 
-    public ComponentBox (int shiftX, int shiftY, Color color, string[] arr) : this(arr)
+    public ComponentBox (int shiftLeft, int shiftTop, Color color, string[] arr) : this(arr)
     {
-        ShiftX = shiftX;
-        ShiftY = shiftY;
+        ShiftLeft = shiftLeft;
+        ShiftTop = shiftTop;
         Color = color;
     }
-    public ComponentBox (int shiftX, int shiftY, Color color, string str) : this(shiftX, shiftY, color, new string[] {str})
+    public ComponentBox (int shiftLeft, int shiftTop, Color color, string str) : this(shiftLeft, shiftTop, color, new string[] {str})
     {
     }
     public ComponentBox (string[] arr)
@@ -30,22 +30,21 @@ public class ComponentBox
     }
     
     
-    public ComponentBox CoordinatesAndColor(int shiftX, int shiftY, Color color)
+    public void CoordinatesAndColor(int shiftLeft, int shiftTop, Color color)
     {
-        ShiftX = shiftX;
-        ShiftY = shiftY;
+        ShiftLeft = shiftLeft;
+        ShiftTop = shiftTop;
         Color = color;
-        return this; 
     }
     
-    public void CoordinatesColorAndString(int shiftX, int shiftY, Color color, string str)
+    public void CoordinatesColorAndString(int shiftLeft, int shiftTop, Color color, string str)
     {
-        CoordinatesColorAndString(shiftX, shiftY, color, new string[] { str });
+        CoordinatesColorAndString(shiftLeft, shiftTop, color, new string[] { str });
     }
     
-    public void CoordinatesColorAndString(int shiftX, int shiftY, Color color, string[] str)
+    public void CoordinatesColorAndString(int shiftLeft, int shiftTop, Color color, string[] str)
     {
-        CoordinatesAndColor(shiftX, shiftY, color);
+        CoordinatesAndColor(shiftLeft, shiftTop, color);
         ChangeString(str);
     }    
     
