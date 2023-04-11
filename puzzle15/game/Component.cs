@@ -6,9 +6,7 @@ public class Component
     private readonly int _padding;
     private readonly int _shiftTop;
     private readonly int _shiftLeft;
-    private int _rows;
-    private int _columns;
-    
+
     public event Action <ComponentBox> PrintEvent;
     
     private readonly Dictionary<int, List<ComponentBox>> _interfaceComponents =
@@ -399,7 +397,7 @@ public class Component
         int scoreboardShiftLeftMoves = 22;
         int scoreBoardMaxLines = 0;
         
-        if (GamePuzzle15.Rows < 4) 
+        if (GamePuzzle15.Rows <= 3) 
         {
             scoreBoardMaxLines = _elementNumberHeight - _padding;    
         }
@@ -432,11 +430,5 @@ public class Component
             PrintEvent(new ComponentBox(scoreboardShiftLeft + scoreboardShiftLeftTime,scoreboardShiftTop+n, color, scoreboard[n].Ts.ToString(@"mm\:ss")));
             PrintEvent(new ComponentBox(scoreboardShiftLeft + scoreboardShiftLeftMoves,scoreboardShiftTop+n, color, scoreboard[n].Moves.ToString()));
         }
-    }
-    
-    public void SetRowsAndColumns(int rows, int columns)
-    {
-        _rows = rows;
-        _columns = columns;
     }
 }
