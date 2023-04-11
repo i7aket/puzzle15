@@ -3,77 +3,86 @@ namespace puzzle15;
 public class GameBoard
     { 
         public GameStatus GameStatus { get; private set; }
-        private int _zeroPosX = 3;
-        private int _zeroPosY = 3;
-        private const int Shuffles = 20; // How many times to shuffle board
+        private int _zeroPosLeft = GamePuzzle15.Columns-1;
+        private int _zeroPosTop = GamePuzzle15.Rows-1;
+        private const int Shuffles = (GamePuzzle15.Columns+1)*(GamePuzzle15.Rows+1); // How many times to shuffle board
+        private int Rows;
+        private int Columns;
         
         private int[,] _board;
+        private readonly int[,] _winBoard;
         
         public event Action<NumbersIndexBox> InitBoard;
         public event Action ResetMoves;
         public event Action AddMoves;
 
-        private readonly int[,] _winBoard =
-        {
-            { 1, 2, 3, 4 },
-            { 5, 6, 7, 8 },
-            { 9, 10, 11, 12 },
-            { 13, 14, 15, 0 },
-        };
 
+
+        public int [,] winBoard()
+        {
+            int counter = 1;
+            int[,] arr = new int[GamePuzzle15.Rows, GamePuzzle15.Columns];
+            for (int i = 0; i < GamePuzzle15.Rows; i++)
+            {
+                for (int j = 0; j < GamePuzzle15.Columns; j++)
+                {
+                    arr[i, j] = counter++;
+                }
+            }
+            arr[arr.GetUpperBound(0), arr.GetUpperBound(1)] = 0;
+            return arr;
+        }
 
         public GameBoard()
         {
-            _board = new[,]
+            if (GamePuzzle15.Rows < 3 || GamePuzzle15.Columns < 3 || GamePuzzle15.Rows > 9 || GamePuzzle15.Columns > 9)
             {
-                { 1, 2, 3, 4 },
-                { 5, 6, 7, 8 },
-                { 9, 10, 11, 12 },
-                { 13, 14, 15, 0 },
-            };
+                throw new ArgumentException("Rows or Columns cant be less then 3 or more then 9");
+            }
+            Rows = GamePuzzle15.Rows;
+            Columns = GamePuzzle15.Columns;
+            _board = winBoard();
+            _winBoard = winBoard();
         }
 
         private void Shuffle()
         {
             Random random = new Random();
+            
             for (int i = 0; i < Shuffles; i++)
             {
-                int rnd = random.Next(1, Const.RowSize + 1);
-                Up(rnd);
-                Thread.Sleep(25);
-                Left(rnd);
-                Thread.Sleep(25);
-                Down(rnd);
-                Thread.Sleep(25);
-                Right(rnd);
-                Thread.Sleep(25);
+                int rndLeft = random.Next(1, GamePuzzle15.Columns);
+                int rndTop = random.Next(1, GamePuzzle15.Rows);
+                
+                Up(rndTop); 
+                
+                Left(rndLeft);
+                
+                Down(rndTop);
+                
+                Right(rndLeft);
+                
             }
             ResetMoves();
         }
 
         public void DefaultPosition()
         {
-            _zeroPosX = 3;
-            _zeroPosY = 3;
-            _board = new[,]
-            {
-                { 1, 2, 3, 4 },
-                { 5, 6, 7, 8 },
-                { 9, 10, 11, 12 },
-                { 13, 14, 15, 0 },
-            };
+            _zeroPosLeft = GamePuzzle15.Columns-1;
+            _zeroPosTop = GamePuzzle15.Rows-1;
+            _board = winBoard();
         }
 
         public void Right(int repeat = 1)
         {
-            if (_zeroPosX < Const.RowSize)
+            if (_zeroPosLeft < GamePuzzle15.Columns-1)
             {
                 for (int i = 0; i < repeat; i++)
                 {
                     int index1 = Array.IndexOf(_board.Cast<int>().ToArray(), 0); //Saving Index of Zero before switch
-                    _board[_zeroPosY, _zeroPosX] = _board[_zeroPosY, _zeroPosX + 1];
-                    _board[_zeroPosY, _zeroPosX + 1] = 0;
-                    _zeroPosX++;
+                    _board[_zeroPosTop, _zeroPosLeft] = _board[_zeroPosTop, _zeroPosLeft + 1];
+                    _board[_zeroPosTop, _zeroPosLeft + 1] = 0;
+                    _zeroPosLeft++;
                     AddMoves();
                     int index2 = Array.IndexOf(_board.Cast<int>().ToArray(), 0); //Saving Index of Zero after switch
                     IEnumerable<int> index = new int[] { index1, index2 };
@@ -86,14 +95,14 @@ public class GameBoard
 
         public void Down(int repeat = 1)
         {
-            if (_zeroPosY < Const.RowSize)
+            if (_zeroPosTop < GamePuzzle15.Rows-1)
             {
                 for (int i = 0; i < repeat; i++)
                 {
                     int index1 = Array.IndexOf(_board.Cast<int>().ToArray(), 0); //Saving Index of Zero before switch
-                    _board[_zeroPosY, _zeroPosX] = _board[_zeroPosY + 1, _zeroPosX];
-                    _board[_zeroPosY + 1, _zeroPosX] = 0;
-                    _zeroPosY++;
+                    _board[_zeroPosTop, _zeroPosLeft] = _board[_zeroPosTop + 1, _zeroPosLeft];
+                    _board[_zeroPosTop + 1, _zeroPosLeft] = 0;
+                    _zeroPosTop++;
                     AddMoves();
                     int index2 = Array.IndexOf(_board.Cast<int>().ToArray(), 0); //Saving Index of Zero after switch
                     IEnumerable<int> index = new int[] { index1, index2 };
@@ -106,14 +115,14 @@ public class GameBoard
 
         public void Left(int repeat = 1)
         {
-            if (_zeroPosX > 0)
+            if (_zeroPosLeft > 0)
             {
                 for (int i = 0; i < repeat; i++)
                 {
                     int index1 = Array.IndexOf(_board.Cast<int>().ToArray(), 0); //Saving Index of Zero before switch   
-                    _board[_zeroPosY, _zeroPosX] = _board[_zeroPosY, _zeroPosX - 1];
-                    _board[_zeroPosY, _zeroPosX - 1] = 0;
-                    _zeroPosX--;
+                    _board[_zeroPosTop, _zeroPosLeft] = _board[_zeroPosTop, _zeroPosLeft - 1];
+                    _board[_zeroPosTop, _zeroPosLeft - 1] = 0;
+                    _zeroPosLeft--;
                     AddMoves();
                     int index2 = Array.IndexOf(_board.Cast<int>().ToArray(), 0); //Saving Index of Zero after switch
                     IEnumerable<int> index = new int[] { index1, index2 };
@@ -126,14 +135,14 @@ public class GameBoard
 
         public void Up(int repeat = 1)
         {
-            if (_zeroPosY > 0)
+            if (_zeroPosTop > 0)
             {
                 for (int i = 0; i < repeat; i++)
                 {
                     int index1 = Array.IndexOf(_board.Cast<int>().ToArray(), 0); //Saving Index of Zero before switch
-                    _board[_zeroPosY, _zeroPosX] = _board[_zeroPosY - 1, _zeroPosX];
-                    _board[_zeroPosY - 1, _zeroPosX] = 0;
-                    _zeroPosY--;
+                    _board[_zeroPosTop, _zeroPosLeft] = _board[_zeroPosTop - 1, _zeroPosLeft];
+                    _board[_zeroPosTop - 1, _zeroPosLeft] = 0;
+                    _zeroPosTop--;
                     AddMoves();
                     int index2 = Array.IndexOf(_board.Cast<int>().ToArray(), 0); //Saving Index of Zero after switch
                     IEnumerable<int> index = new int[] { index1, index2 };

@@ -1,35 +1,48 @@
-using System.Text;
-
 namespace puzzle15;
 public class Component
 {
+    private readonly int _elementNumberWidth;
+    private readonly int _elementNumberHeight;
+    private readonly int _padding;
+    private readonly int _shiftTop;
+    private readonly int _shiftLeft;
+    private int _rows;
+    private int _columns;
+    
     public event Action <ComponentBox> PrintEvent;
     
     private readonly Dictionary<int, List<ComponentBox>> _interfaceComponents =
         new Dictionary<int, List<ComponentBox>>();
     private readonly Dictionary<int, CoordinateBox> _numberCoordinates =
         new Dictionary<int, CoordinateBox>();
-
+    
     public Component()
     {
-        int counter = 0; 
-        int paddingTop = 1;
+        _elementNumberWidth = _numbers[0, 0].Length * 2; // numbers consists of 2 digits 
+        _elementNumberHeight = _numbers.GetUpperBound(1) + 1;
+        _padding = 1;
+        _shiftTop = _padding + (_elementNumberHeight + _padding) * (GamePuzzle15.Rows);
+        _shiftLeft = _padding + (_elementNumberWidth + _padding) * (GamePuzzle15.Columns);
 
-        for (int row = 0; row < Const.RowSize + 1; row++)
+        // Setting up coordinates of numbers 
+        int counter = 0;
+        int shiftNumberTop = _padding;
+
+        for (int row = 0; row < GamePuzzle15.Rows; row++)
         {
-            var paddingLeft = 1; 
-            for (int column = 0; column < Const.ColumnSize + 1; column++)
+            var shiftNumberLeft = _padding;
+            for (int column = 0; column < GamePuzzle15.Columns; column++)
             {
-                _numberCoordinates[counter] = new CoordinateBox(paddingTop, paddingLeft);
-                counter++;
-                paddingLeft += _numbers[0,0].Length*2+1 ;   // multiply by 2 because we have 2 digits in number component.
+                _numberCoordinates[counter++] = new CoordinateBox(shiftNumberTop, shiftNumberLeft);
+                shiftNumberLeft += _elementNumberWidth + _padding;
             }
 
-            paddingTop += _numbers.GetUpperBound(1) + 1 + 1; //+ height of the Element + padding 
+            shiftNumberTop += _elementNumberHeight + _padding;
         }
 
 
-        string[] howToPlay = new [] {
+        string[] howToPlay = new[]
+        {
             "   Use cursor control keys   ",
             " (the arrows) to move blocks ",
             "                             ",
@@ -37,42 +50,45 @@ public class Component
             "    Press N for New Game     ",
             "   Press C to change name    ",
         };
-        
-        string[] nameMovesTimes = new [] {
-            " Name:                       ",
-            "                             ",
-            " Moves:                      ",
-            "                             ",
-            " Time:                       ",
-            "                             "
+
+        string[] nameMovesTimes = new[]
+        {
+            " Name:  ",
+            "",
+            " Moves: ",
+            "",
+            " Time:  ",
+            ""
         };
 
         //Component Layer0
         List<ComponentBox> layer0 = new List<ComponentBox>();
-        layer0.Add(new ComponentBox(0, 0, Color.Yellow, CreateCharBox(Const.CanvasHeight, Const.CanvasWidth, '*')));
+        layer0.Add(new ComponentBox(0, 0, Color.Yellow,
+            CreateCharBox(_shiftTop, _padding + _shiftLeft + howToPlay[0].Length, '*')));
         _interfaceComponents[Const.Layer0] = layer0;
-        
-        List<ComponentBox> howToPlayTable = new List<ComponentBox>();
-        
-        howToPlayTable.Add(new ComponentBox(77, 8, Color.Black, CreateCharBox(6, 29)));
-        howToPlayTable.Add(new ComponentBox(77, 8, Color.Green, howToPlay));
-        howToPlayTable.Add (new ComponentBox(86,11, Color.Red, "esc"));
-        howToPlayTable.Add (new ComponentBox(87,12, Color.Red, "N"));
-        howToPlayTable.Add (new ComponentBox(86,13, Color.Red, "C"));
-        _interfaceComponents[Const.HowToPlayTable] = howToPlayTable;
-        
-        
-        List<ComponentBox> nameMovesTimesTable = new List<ComponentBox>();
-        nameMovesTimesTable.Add(new ComponentBox(77, 1, Color.Black, CreateCharBox(6, 29)));
-        nameMovesTimesTable.Add(new ComponentBox(77, 1, Color.Green, nameMovesTimes));
-        _interfaceComponents[Const.NameMovesTimeTable] = nameMovesTimesTable;
-        
-        List<ComponentBox> scoreboardTable = new List<ComponentBox>();
-        nameMovesTimesTable.Add(new ComponentBox(77, 15, Color.Black, CreateCharBox(13, 29)));
-        scoreboardTable.Add (new ComponentBox(78,15, Color.Green, "Name            Time  Moves"));
-        _interfaceComponents[Const.ScoreboardTable] = scoreboardTable;
 
-        string[] win = new [] {
+        List<ComponentBox> howToPlayTable = new List<ComponentBox>();
+
+        howToPlayTable.Add(new ComponentBox(_shiftLeft, _padding + _elementNumberHeight + _padding, Color.Black,
+            CreateCharBox(6, 29)));
+        howToPlayTable.Add(new ComponentBox(_shiftLeft, _padding + _elementNumberHeight + _padding, Color.Green,
+            howToPlay));
+        howToPlayTable.Add(new ComponentBox(_shiftLeft + 9, _padding + _elementNumberHeight + _padding + 3, Color.Red,
+            "esc"));
+        howToPlayTable.Add(new ComponentBox(_shiftLeft + 10, _padding + _elementNumberHeight + _padding + 4, Color.Red,
+            "N"));
+        howToPlayTable.Add(new ComponentBox(_shiftLeft + 9, _padding + _elementNumberHeight + _padding + 5, Color.Red,
+            "C"));
+        _interfaceComponents[Const.HowToPlayTable] = howToPlayTable;
+
+        List<ComponentBox> nameMovesTimesTable = new List<ComponentBox>();
+        nameMovesTimesTable.Add(new ComponentBox(_shiftLeft, _padding, Color.Black, CreateCharBox(howToPlay.GetUpperBound(0) + 1, howToPlay[0].Length)));
+        nameMovesTimesTable.Add(new ComponentBox(_shiftLeft, _padding, Color.Green, nameMovesTimes));
+        _interfaceComponents[Const.NameMovesTimeTable] = nameMovesTimesTable;
+
+
+        string[] win = new[]
+        {
             " ██████╗ ██████╗ ███╗   ██╗ ██████╗ ██████╗  █████╗ ████████╗███████╗",
             "██╔════╝██╔═══██╗████╗  ██║██╔════╝ ██╔══██╗██╔══██╗╚══██╔══╝██╔════╝",
             "██║     ██║   ██║██╔██╗ ██║██║  ███╗██████╔╝███████║   ██║   ███████╗",
@@ -92,31 +108,33 @@ public class Component
             "",
             "                Press any key to start new game                      "
         };
-        
-        
+
         List<ComponentBox> winMessageComponentBoxes = new List<ComponentBox>();
-        winMessageComponentBoxes.Add(new ComponentBox(27, 4, Color.Red, win));
+        winMessageComponentBoxes.Add(new ComponentBox((_shiftLeft + howToPlay[0].Length) / 2 - win[0].Length / 2,
+            _shiftTop / 2 - win.Length / 2, Color.Red, win));
         _interfaceComponents[Const.WinMessage] = winMessageComponentBoxes;
-        
+
+
         List<ComponentBox> nameComponentBoxes = new List<ComponentBox>();
-        nameComponentBoxes.Add(new ComponentBox(Const.NamePosLeft, Const.NamePosTop, Color.Green, CreateCharBox(1, 21)));
-        nameComponentBoxes.Add(new ComponentBox(Const.NamePosLeft,Const.NamePosTop, Color.Green, ""));
+        nameComponentBoxes.Add(new ComponentBox(_shiftLeft + nameMovesTimes[0].Length, _padding, Color.Green,
+            CreateCharBox(1, 21)));
+        nameComponentBoxes.Add(new ComponentBox(_shiftLeft + nameMovesTimes[0].Length, _padding, Color.Green, ""));
         _interfaceComponents[Const.Name] = nameComponentBoxes;
-        
+
         List<ComponentBox> movesComponentBoxes = new List<ComponentBox>();
-        movesComponentBoxes.Add(new ComponentBox(Const.MovesPosLeft, Const.MovesPosTop, Color.Green, CreateCharBox(1, 21)));
-        movesComponentBoxes.Add(new ComponentBox(Const.MovesPosLeft,Const.MovesPosTop, Color.Green, "0"));
+        movesComponentBoxes.Add(new ComponentBox(_shiftLeft + nameMovesTimes[0].Length, _padding + 2, Color.Green,
+            CreateCharBox(1, 21)));
+        movesComponentBoxes.Add(new ComponentBox(_shiftLeft + nameMovesTimes[0].Length, _padding + 2, Color.Green,
+            "0"));
         _interfaceComponents[Const.Moves] = movesComponentBoxes;
 
         List<ComponentBox> timeComponentBoxes = new List<ComponentBox>();
-        timeComponentBoxes.Add(new ComponentBox(Const.TimePosLeft, Const.TimePosTop, Color.Green, CreateCharBox(1, 21)));
-        timeComponentBoxes.Add(new ComponentBox(Const.TimePosLeft,Const.TimePosTop, Color.Green, "00:00"));
+        timeComponentBoxes.Add(new ComponentBox(_shiftLeft + nameMovesTimes[0].Length, _padding + 4, Color.Green,
+            CreateCharBox(1, 21)));
+        timeComponentBoxes.Add(new ComponentBox(_shiftLeft + nameMovesTimes[0].Length, _padding + 4, Color.Green,
+            "00:00"));
         _interfaceComponents[Const.Time] = timeComponentBoxes;
         
-        List<ComponentBox> typeYourNameComponentBoxes = new List<ComponentBox>();
-        typeYourNameComponentBoxes.Add(new ComponentBox(85, 1, Color.Green, CreateCharBox(1, 21)));
-        typeYourNameComponentBoxes.Add(new ComponentBox(85,1, Color.Green, "Type your Name"));
-        _interfaceComponents[Const.TypeYourNameMessage] = typeYourNameComponentBoxes;
     }
 
     string[,] _numbers = new[,]
@@ -227,7 +245,6 @@ public class Component
         // int digit1 = (number / 10 == 0) ? 10 : (number / 10 == 1) ? 11 : number / 10; 
         // int digit2 = (digit1 == 10 && number % 10 == 0) ? 10 : number % 10;
         
-        
         const int empty = 10;
         const int oneInTwoDigitNumber = 11;
 
@@ -289,10 +306,6 @@ public class Component
             PrintEvent(component); 
         }
         foreach (var component in _interfaceComponents[Const.NameMovesTimeTable])
-        {
-            PrintEvent(component); 
-        }
-        foreach (var component in _interfaceComponents[Const.ScoreboardTable])
         {
             PrintEvent(component); 
         }
@@ -380,12 +393,28 @@ public class Component
     public void ShowScoreboard(List<PlayerSaveLoadBox> scoreboard)
     {
         //Components ScoreBoard
-        const int shiftTop = 16;
-        const int shiftLeft = 78;
-        const int shiftLeftTime = 16;
-        const int shiftLeftMoves = 22;
+        int scoreboardShiftTop = _padding + _elementNumberHeight + _padding + _elementNumberHeight +  _padding + _padding;
+        int scoreboardShiftLeft = _shiftLeft + _padding;
+        int scoreboardShiftLeftTime = Const.MaxNameLength; 
+        int scoreboardShiftLeftMoves = 22;
+        int scoreBoardMaxLines = 0;
         
-        for (int n = 0; n < scoreboard.Count; n++)
+        if (GamePuzzle15.Rows < 4) 
+        {
+            scoreBoardMaxLines = _elementNumberHeight - _padding;    
+        }
+        else
+        {
+            scoreBoardMaxLines += _elementNumberHeight + _elementNumberHeight + (GamePuzzle15.Rows - 4) * (_elementNumberHeight +_padding);
+        }
+        
+        
+        int scoreboardLines = scoreBoardMaxLines > scoreboard.Count ? scoreboard.Count : scoreBoardMaxLines;
+        
+        PrintEvent (new ComponentBox(_shiftLeft, 15, Color.Black, CreateCharBox(scoreBoardMaxLines+_padding, 29)));
+        PrintEvent (new ComponentBox(_shiftLeft+_padding,15, Color.Green, "Name            Time  Moves"));
+        
+        for (int n = 0; n < scoreboardLines; n++)
         {
             Color color;
             if (n == 0)
@@ -399,9 +428,15 @@ public class Component
             {
                 color = Color.Green;
             }
-            PrintEvent(new ComponentBox(shiftLeft, shiftTop+n, color, scoreboard[n].Name));
-            PrintEvent(new ComponentBox(shiftLeft + shiftLeftTime,shiftTop+n, color, scoreboard[n].Ts.ToString(@"mm\:ss")));
-            PrintEvent(new ComponentBox(shiftLeft + shiftLeftMoves,shiftTop+n, color, scoreboard[n].Moves.ToString()));
+            PrintEvent(new ComponentBox(scoreboardShiftLeft, scoreboardShiftTop+n, color, scoreboard[n].Name));
+            PrintEvent(new ComponentBox(scoreboardShiftLeft + scoreboardShiftLeftTime,scoreboardShiftTop+n, color, scoreboard[n].Ts.ToString(@"mm\:ss")));
+            PrintEvent(new ComponentBox(scoreboardShiftLeft + scoreboardShiftLeftMoves,scoreboardShiftTop+n, color, scoreboard[n].Moves.ToString()));
         }
+    }
+    
+    public void SetRowsAndColumns(int rows, int columns)
+    {
+        _rows = rows;
+        _columns = columns;
     }
 }

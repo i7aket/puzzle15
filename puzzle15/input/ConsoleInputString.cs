@@ -4,7 +4,7 @@ public class ConsoleInputString : IInputString
 {
     public string? InputName()
     {
-        Console.SetCursorPosition(Const.NamePosLeft, Const.NamePosTop);
+        Console.SetCursorPosition(85, 1);
         string? input = Console.ReadLine();
         return input;
     }

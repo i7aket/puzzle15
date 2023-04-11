@@ -2,11 +2,14 @@ namespace puzzle15;
 
 public class GamePuzzle15
 {
-    public readonly GameBoard Gameboard = new GameBoard();
-    private Player _player =new Player();
+    public const int Rows = 4;
+    public const int Columns = 4;
+    
+    public GameBoard Gameboard = new GameBoard();
+    private Player _player = new Player();
     private Component _component = new Component();
-    private readonly SaveLoadDiskJson <PlayerNameSaveLoadBox> _saveLoadDiskJsonName= new SaveLoadDiskJson <PlayerNameSaveLoadBox>();
-    private readonly SaveLoadDiskJson <List<PlayerSaveLoadBox>> _saveLoadDiskJsonScoreboard= new SaveLoadDiskJson <List<PlayerSaveLoadBox>>();
+    private readonly SaveLoadDiskJson <PlayerNameSaveLoadBox> _saveLoadDiskJsonName= new SaveLoadDiskJson <PlayerNameSaveLoadBox>("name.json");
+    private readonly SaveLoadDiskJson <List<PlayerSaveLoadBox>> _saveLoadDiskJsonScoreboard= new SaveLoadDiskJson <List<PlayerSaveLoadBox>>("scoreboard.json");
     
     private readonly InputControlsKeyboard _inputControlKeyboard = new InputControlsKeyboard();
     

@@ -3,20 +3,27 @@ namespace puzzle15;
 
 public class SaveLoadDiskJson<T> : ISaveLoad<T>
 {
-    public void Save(T obj, string filePath)
+    private string _filePath;
+
+    public SaveLoadDiskJson(string filePath)
+    {
+        _filePath = filePath;
+    }
+
+    public void Save(T obj)
     {
         string json = JsonConvert.SerializeObject(obj);
-        using (StreamWriter save = new StreamWriter(filePath, false))
+        using (StreamWriter save = new StreamWriter(_filePath, false))
         {
             save.Write(json);
         }
     }
 
-    public T Load(string filePath)
+    public T Load()
     {
-        if (File.Exists(filePath))
+        if (File.Exists(_filePath))
         {
-            string json = File.ReadAllText(filePath);
+            string json = File.ReadAllText(_filePath);
 
             try
             {
@@ -30,7 +37,7 @@ public class SaveLoadDiskJson<T> : ISaveLoad<T>
         }
         else
         {
-            throw new FileNotFoundException($"There is no such file: {filePath}");
+            throw new FileNotFoundException($"There is no such file: {_filePath}");
         }
     }
 }

@@ -11,11 +11,11 @@ public class Player
     private string _name;
     private List<PlayerSaveLoadBox> _scoreboard = new();
     
-    public event Action<PlayerNameSaveLoadBox, string> SaveNameEvent;
-    public event Func<string, PlayerNameSaveLoadBox> LoadNameEvent;
+    public event Action<PlayerNameSaveLoadBox> SaveNameEvent;
+    public event Func<PlayerNameSaveLoadBox> LoadNameEvent;
     
-    public event Action<List<PlayerSaveLoadBox>, string> SaveScoreboardEvent;
-    public event Func<string, List<PlayerSaveLoadBox>> LoadScoreboardEvent;
+    public event Action<List<PlayerSaveLoadBox>> SaveScoreboardEvent;
+    public event Func<List<PlayerSaveLoadBox>> LoadScoreboardEvent;
     
     public event Action<PlayerNameSaveLoadBox> ChangeNameEvent;
     public event Func<string> InputNameEvent;
@@ -35,16 +35,15 @@ public class Player
         _scoreboard.Add(playerSaveLoadBox);
         _scoreboard =    _scoreboard.OrderBy (saveLoadBox => saveLoadBox.Ts)
                                     .ThenBy (saveLoadBox => saveLoadBox.Moves)
-                                    .Take (12)
                                     .ToList ();
-        SaveScoreboardEvent(_scoreboard, Const.SaveLoadScoreboardPath);
+        SaveScoreboardEvent(_scoreboard);
     }
     
     public void LoadScoreboard ()
     {
         try
         {
-            _scoreboard = LoadScoreboardEvent(Const.SaveLoadScoreboardPath);
+            _scoreboard = LoadScoreboardEvent();
             ShowScoreboardEvent(_scoreboard);
         }
         catch (FileNotFoundException)
@@ -91,7 +90,7 @@ public class Player
     
     private void SaveName()
     {
-        SaveNameEvent(new PlayerNameSaveLoadBox(_name), Const.SaveLoadNamePath);
+        SaveNameEvent(new PlayerNameSaveLoadBox(_name));
     }
 
     public void LoadName()
@@ -99,7 +98,7 @@ public class Player
         PlayerNameSaveLoadBox playerSaveLoadBox;
         try
         {
-           playerSaveLoadBox = LoadNameEvent(Const.SaveLoadNamePath);
+           playerSaveLoadBox = LoadNameEvent();
         }
         catch (FileNotFoundException)
         {
