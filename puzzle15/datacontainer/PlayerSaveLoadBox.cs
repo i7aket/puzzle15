@@ -13,8 +13,8 @@ public class PlayerSaveLoadBox
     {
         Name = name;
         Ts = ts;
-        FinishTime = finishTime;
         StartTime = startTime;
+        FinishTime = finishTime;
         Moves = moves;
     }
 }

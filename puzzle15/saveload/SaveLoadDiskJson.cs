@@ -3,7 +3,7 @@ namespace puzzle15;
 
 public class SaveLoadDiskJson<T> : ISaveLoad<T>
 {
-    private string _filePath;
+    private readonly string _filePath;
 
     public SaveLoadDiskJson(string filePath)
     {

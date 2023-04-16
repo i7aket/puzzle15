@@ -18,10 +18,14 @@
       <Compile Remove="Component.cs" />
       <Compile Remove="ComponentsStrArr.cs" />
       <Compile Remove="TTimer.cs" />
+      <Compile Remove="saveload\SaveLoadMySqlScoreboard.cs" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MySql.Data" Version="8.0.32.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="Npgsql" Version="8.0.0-preview.2" />
+      <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
     </ItemGroup>
 
 </Project>

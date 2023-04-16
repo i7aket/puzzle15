@@ -8,8 +8,19 @@ public class GamePuzzle15
     public GameBoard Gameboard = new GameBoard();
     private Player _player = new Player();
     private Component _component = new Component();
+    
+    
+
     private readonly SaveLoadDiskJson <PlayerNameSaveLoadBox> _saveLoadDiskJsonName= new SaveLoadDiskJson <PlayerNameSaveLoadBox>("name.json");
-    private readonly SaveLoadDiskJson <List<PlayerSaveLoadBox>> _saveLoadDiskJsonScoreboard= new SaveLoadDiskJson <List<PlayerSaveLoadBox>>("scoreboard.json");
+    
+    //JSOB
+    //private readonly SaveLoadDiskJson <List<PlayerSaveLoadBox>> _saveLoadDiskJsonScoreboard= new SaveLoadDiskJson <List<PlayerSaveLoadBox>>("scoreboard.json");
+    
+    //SQLite
+    private readonly SaveLoadScoreboardSqLite _saveLoadScoreboardSqLite= new SaveLoadScoreboardSqLite("scoreboardDB");
+    
+    //Postgre
+    //private readonly SaveLoadScoreboardPostgresql _saveLoadScoreboardPostgresql= new SaveLoadScoreboardPostgresql("Host=127.0.0.1:5433;Username=postgres;Password=12345;Database=puzzle15db;");
     
     private readonly InputControlsKeyboard _inputControlKeyboard = new InputControlsKeyboard();
     
@@ -39,8 +50,20 @@ public class GamePuzzle15
         _player.ChangeTimeEvent += _component.ChangeTime;
         _player.SaveNameEvent += _saveLoadDiskJsonName.Save;
         _player.LoadNameEvent += _saveLoadDiskJsonName.Load;
-        _player.SaveScoreboardEvent += _saveLoadDiskJsonScoreboard.Save;
-        _player.LoadScoreboardEvent += _saveLoadDiskJsonScoreboard.Load;
+        
+        //JSON
+        //_player.SaveScoreboardEvent += _saveLoadDiskJsonScoreboard.Save;
+        //_player.LoadScoreboardEvent += _saveLoadDiskJsonScoreboard.Load;
+        
+        //SQLite
+        _player.SaveScoreboardEvent += _saveLoadScoreboardSqLite.Save;
+        _player.LoadScoreboardEvent += _saveLoadScoreboardSqLite.Load;
+        
+        //Postgre
+        //_player.SaveScoreboardEvent += _saveLoadScoreboardPostgresql.Save;
+        //_player.LoadScoreboardEvent += _saveLoadScoreboardPostgresql.Load;
+
+        
         _player.ShowScoreboardEvent += _component.ShowScoreboard;
         
         Gameboard.InitBoard += _component.MoveTileEvent;

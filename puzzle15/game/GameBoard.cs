@@ -75,7 +75,7 @@ public class GameBoard
 
         public void Right(int repeat = 1)
         {
-            if (_zeroPosLeft <= GamePuzzle15.Columns)
+            if (_zeroPosLeft < GamePuzzle15.Columns-1)
             {
                 for (int i = 0; i < repeat; i++)
                 {
@@ -95,7 +95,7 @@ public class GameBoard
 
         public void Down(int repeat = 1)
         {
-            if (_zeroPosTop <= GamePuzzle15.Rows)
+            if (_zeroPosTop < GamePuzzle15.Rows-1)
             {
                 for (int i = 0; i < repeat; i++)
                 {
