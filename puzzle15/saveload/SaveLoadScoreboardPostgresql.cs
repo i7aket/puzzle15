@@ -1,9 +1,12 @@
+using System.Data.SqlClient;
+using MySqlX.XDevAPI;
+
 namespace puzzle15;
 using Npgsql;
 
 public class SaveLoadScoreboardPostgresql : ISaveLoad<List<PlayerSaveLoadBox>>
 {
-    private string _connectionString;
+    private readonly string _connectionString;
     
     public SaveLoadScoreboardPostgresql(string connectionString)
     {
@@ -32,7 +35,7 @@ public class SaveLoadScoreboardPostgresql : ISaveLoad<List<PlayerSaveLoadBox>>
         string createTableQuery = @"
         CREATE TABLE IF NOT EXISTS scoreboard (
             id SERIAL PRIMARY KEY,
-            name TEXT,
+            name VARCHAR(15),
             ts INTERVAL,
             start_time TIMESTAMP,
             finish_time TIMESTAMP,
@@ -56,14 +59,20 @@ public class SaveLoadScoreboardPostgresql : ISaveLoad<List<PlayerSaveLoadBox>>
             foreach (PlayerSaveLoadBox obj in objList)
             {
                 string insertQuery =
-                    $"INSERT INTO scoreboard (name, ts, start_time, finish_time, moves) " +
-                    $"VALUES ('{obj.Name}', '{obj.Ts}', '{obj.StartTime.ToString("yyyy-MM-dd HH:mm:ss")}', '{obj.FinishTime.ToString("yyyy-MM-dd HH:mm:ss")}', {obj.Moves}) " +
-                    $"ON CONFLICT DO NOTHING;";
+                    "INSERT INTO scoreboard (name, ts, start_time, finish_time, moves) VALUES (@name, @ts, @start_time, @finish_time, @moves) ON CONFLICT DO NOTHING;";
 
-                using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
+                NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection);
+                NpgsqlParameter nameParam = new NpgsqlParameter("@name", obj.Name.Length > 15 ? obj.Name.Substring(0, 15) : obj.Name);
+                command.Parameters.Add(nameParam);
+                NpgsqlParameter tsParam = new NpgsqlParameter("@ts", obj.Ts);
+                command.Parameters.Add(tsParam);
+                NpgsqlParameter startTimeParam = new NpgsqlParameter("@start_time", obj.StartTime);
+                command.Parameters.Add(startTimeParam);
+                NpgsqlParameter finishTimeParam = new NpgsqlParameter("@finish_time", obj.FinishTime);
+                command.Parameters.Add(finishTimeParam);
+                NpgsqlParameter movesParam = new NpgsqlParameter("@moves", obj.Moves);
+                command.Parameters.Add(movesParam);
+                command.ExecuteNonQuery();
             }
         }
     }

@@ -58,11 +58,16 @@ public class SaveLoadScoreboardSqLite : ISaveLoad<List<PlayerSaveLoadBox>>
             foreach (PlayerSaveLoadBox obj in objList)
             {
                 string insertQuery =
-                    $"INSERT OR IGNORE INTO Scoreboard (name, ts, start_time, finish_time, moves) " +
-                    $"VALUES ('{obj.Name}', '{obj.Ts.ToString()}', '{obj.StartTime.ToString("yyyy-MM-dd HH:mm:ss")}', '{obj.FinishTime.ToString("yyyy-MM-dd HH:mm:ss")}', {obj.Moves})";
+                    "INSERT OR IGNORE INTO Scoreboard (name, ts, start_time, finish_time, moves) " +
+                    "VALUES (@name, @ts, @start_time, @finish_time, @moves)";
 
                 using (SQLiteCommand command = new SQLiteCommand(insertQuery, connection))
                 {
+                    command.Parameters.AddWithValue("@name", obj.Name);
+                    command.Parameters.AddWithValue("@ts", obj.Ts.ToString());
+                    command.Parameters.AddWithValue("@start_time", obj.StartTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                    command.Parameters.AddWithValue("@finish_time", obj.FinishTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                    command.Parameters.AddWithValue("@moves", obj.Moves);
                     command.ExecuteNonQuery();
                 }
             }
